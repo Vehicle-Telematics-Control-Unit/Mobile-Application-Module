@@ -117,10 +117,10 @@ packages:
     dependency: transitive
     description:
       name: flex_seed_scheme
-      sha256: "30216f9e53240cd1c86d2b627040e2d7faa42a7ae0799c6964c4e3bf9b70705d"
+      sha256: "7ded1dbf0cef4d9d27a194ad021f4755cd4a82a3c5f10e803dca84d9843fd639"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.1"
+    version: "1.1.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -452,4 +452,4 @@ packages:
     version: "0.2.0+3"
 sdks:
   dart: ">=2.18.2 <3.0.0"
-  flutter: ">=3.7.0"
+  flutter: ">=3.3.0"
