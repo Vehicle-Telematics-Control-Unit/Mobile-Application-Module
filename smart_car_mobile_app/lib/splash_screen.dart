@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:page_transition/page_transition.dart';
+
 import 'package:smart_car_mobile_app/login_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,6 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
+    var screenHight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -31,8 +34,12 @@ class _SplashScreenState extends State<SplashScreen> {
               child: Container(
             margin: EdgeInsets.only(
                 left: screenWidth / 15, right: screenWidth / 15),
-            child: Image.asset(
-              'assets/images/Logo.png',
+            child: Positioned(
+              height: screenHight / 2,
+              child: Image.asset(
+                'assets/images/Logo.png',
+                height: screenHight / 2,
+              ),
             ),
           )),
           const SizedBox(
