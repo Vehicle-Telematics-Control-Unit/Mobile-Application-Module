@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_car_mobile_app/verification-page.dart';
 
 class LoginPage extends StatefulWidget {
   final TextEditingController controller =
@@ -43,8 +44,11 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 25, right: 25),
                   child: TextField(
+                    cursorColor: Color.fromARGB(255, 145, 55, 55),
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
+                        filled: true, //<-- SEE HERE
+                        fillColor: Colors.grey[900],
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide: const BorderSide(
@@ -64,9 +68,12 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 25, right: 25),
                   child: TextField(
+                    cursorColor: Color.fromARGB(255, 145, 55, 55),
                     controller: widget.controller,
                     obscureText: obscureText,
                     decoration: InputDecoration(
+                        filled: true, //<-- SEE HERE
+                        fillColor: Colors.grey[900],
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide: const BorderSide(
@@ -103,7 +110,12 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   width: screenWidth * 0.7,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const VerificationPage()));
+                    },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromARGB(182, 227, 34, 20),
                         shape: RoundedRectangleBorder(
