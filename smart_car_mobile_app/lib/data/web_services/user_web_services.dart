@@ -5,13 +5,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 
-
+import '../../presentation/widgets/login/alert_dialog.dart';
 import '../../utils/api_endpoints.dart';
 
 import '../models/user.dart';
 
 class UserWebServices extends GetConnect {
   late Dio dio;
+  late String errorMessage;
   UserWebServices() {
     BaseOptions options = BaseOptions(
       baseUrl: ApiEndPoints.baseUrl,
@@ -47,11 +48,10 @@ class UserWebServices extends GetConnect {
       if (e.response?.statusCode == 401) {
         debugPrint("status code ${e.response?.statusCode}");
         if (e.response?.data["errorCode"] == -1) {
-          Get.snackbar('login', 'email does not exists');
+          Get.dialog(const LoginDialogAlert(errorMessage: 'Invalid email'));
         } else if (e.response?.data["errorCode"] == -2) {
-          Get.snackbar('login', 'wrong password');
+          Get.dialog(const LoginDialogAlert(errorMessage: 'Invalid password'));
         }
-        // debugPrint("response ${e.response}");
       }
     }
   }
