@@ -6,7 +6,7 @@ import 'package:smart_car_mobile_app/presentation/widgets/on_board.dart';
 import '../../controllers/authentication_controller.dart';
 
 class SplashScreen extends StatefulWidget {
-  SplashScreen({super.key});
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();

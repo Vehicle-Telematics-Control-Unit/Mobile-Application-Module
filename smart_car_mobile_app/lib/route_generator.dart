@@ -13,7 +13,7 @@ class RouteGenerator {
   Route<dynamic>? generateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => SplashScreen());
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
       case '/login_page':
         return MaterialPageRoute(
           builder: (_) => LoginPage(),

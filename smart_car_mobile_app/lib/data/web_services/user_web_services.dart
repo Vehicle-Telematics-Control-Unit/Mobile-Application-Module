@@ -1,9 +1,10 @@
 import 'dart:io';
 
+import 'package:platform_device_id/platform_device_id.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
-import 'package:smart_car_mobile_app/data/models/login-response.dart';
+
 
 import '../../utils/api_endpoints.dart';
 
@@ -27,21 +28,31 @@ class UserWebServices extends GetConnect {
   }
 
   Future<dynamic> userLogin(String username, String password) async {
+    late String? deviceId;
+    User user;
     try {
-      User user = User(username: username, password: password, deviceId: 2);
+      deviceId = await PlatformDeviceId.getDeviceId;
+      debugPrint("device id is $deviceId");
+    } catch (e) {
+      debugPrint("error in ${e.toString()}");
+    }
+    try {
+      user = User(username: username, password: password, deviceId: deviceId);
       debugPrint("json user ${(user.toJson()).toString()}");
       Response response =
           await dio.post(ApiEndPoints.loginUrl, data: user.toJson());
       await Future.delayed(const Duration(seconds: 2));
-      if (response.statusCode == HttpStatus.ok) {
-        // 200
-        debugPrint('JWT is ${response.data.toString()}');
-        return LoginResponse.fromJson(response.data);
-      } else {
-        return null;
+      return response;
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 401) {
+        debugPrint("status code ${e.response?.statusCode}");
+        if (e.response?.data["errorCode"] == -1) {
+          Get.snackbar('login', 'email does not exists');
+        } else if (e.response?.data["errorCode"] == -2) {
+          Get.snackbar('login', 'wrong password');
+        }
+        // debugPrint("response ${e.response}");
       }
-    } catch (e) {
-      debugPrint(e.toString());
     }
   }
 }

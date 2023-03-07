@@ -1,9 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Response;
 import 'package:smart_car_mobile_app/controllers/authentication_controller.dart';
 import 'package:smart_car_mobile_app/data/models/login-response.dart';
 import 'package:smart_car_mobile_app/data/web_services/user_web_services.dart';
-
 import 'package:smart_car_mobile_app/utils/routes.dart';
 
 class LoginController extends GetxController {
@@ -41,17 +41,19 @@ class LoginController extends GetxController {
     if (isValidate) {
       isLoading(true);
       try {
-        LoginResponse loginResponse = await userWebServices.userLogin(
+        Response response = await userWebServices.userLogin(
             usernameController.text, passwordController.text);
-        if (loginResponse.token != null) {
-          authenticationController.login(loginResponse.token);
-          authenticationController.saveUsername(loginResponse.username);
-          authenticationController.saveEmail(loginResponse.email);
-          debugPrint('saved token is ${authenticationController.getToken()}');
-          // debugPrint('saved email is ${loginResponse.email}');
-          Get.toNamed(AppRoutes.verificationScreen);
-        } else {
-          Get.snackbar('login', 'problem in login');
+        if (response.statusCode == 200) {
+          // 200
+          var loginResponse = LoginResponse.fromJson(response.data);
+          if (loginResponse.token != null) {
+            authenticationController.login(loginResponse.token);
+            authenticationController.saveUsername(loginResponse.username);
+            authenticationController.saveEmail(loginResponse.email);
+            debugPrint('saved token is ${authenticationController.getToken()}');
+            // debugPrint('saved email is ${loginResponse.email}');
+            Get.toNamed(AppRoutes.verificationScreen);
+          }
         }
       } catch (e) {
         debugPrint(e.toString());

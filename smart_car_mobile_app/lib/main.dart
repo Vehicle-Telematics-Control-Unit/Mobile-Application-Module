@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
@@ -37,7 +36,7 @@ class VehiclePlus extends StatelessWidget {
       //theme: FlexThemeData.light(scheme: FlexScheme.hippieBlue),
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.hippieBlue),
       themeMode: ThemeMode.dark,
-      home: SplashScreen(),
+      home: const SplashScreen(),
       // initialRoute: '/',
       debugShowCheckedModeBanner: false,
       onGenerateRoute: routeGenerator.generateRoute,

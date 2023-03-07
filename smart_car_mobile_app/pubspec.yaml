@@ -34,6 +34,7 @@ dependencies:
   cache_manager: ^1.0.0+4
   cupertino_icons: ^1.0.2
   custom_splash: ^0.0.2
+  device_info_plus: ^8.1.0
   device_preview: ^1.1.0
   dio: ^5.0.0
   equatable: ^2.0.5
@@ -54,6 +55,7 @@ dependencies:
   line_icons: ^2.0.1
   page_transition: ^2.0.9
   persistent_bottom_nav_bar: ^5.0.2
+  platform_device_id: ^1.0.1
 
 dev_dependencies:
   flutter_lints: ^2.0.0

@@ -9,11 +9,13 @@ part of 'user.dart';
 User _$UserFromJson(Map<String, dynamic> json) => User(
       username: json['username'] as String?,
       password: json['password'] as String?,
-      deviceId: json['deviceId'] as int?,
+      deviceId: json['deviceId'] as String?,
+      email: json['email'] as String?,
     );
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'username': instance.username,
+      'email': instance.email,
       'password': instance.password,
       'deviceId': instance.deviceId,
     };

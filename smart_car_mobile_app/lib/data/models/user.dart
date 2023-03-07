@@ -11,7 +11,7 @@ class User {
   @JsonKey(name: "password")
   String? password;
   @JsonKey(name: "deviceId")
-  int? deviceId;
+  String? deviceId;
 
   User({this.username, this.password,this.deviceId,this.email});
 

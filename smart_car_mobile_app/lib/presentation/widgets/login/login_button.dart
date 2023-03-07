@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:smart_car_mobile_app/controllers/login_controller.dart';
 
+// ignore: must_be_immutable
 class LoginButton extends StatelessWidget {
   LoginButton({
     super.key,

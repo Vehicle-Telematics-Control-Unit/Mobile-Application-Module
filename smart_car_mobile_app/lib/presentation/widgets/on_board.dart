@@ -1,4 +1,4 @@
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smart_car_mobile_app/controllers/authentication_controller.dart';
 import 'package:smart_car_mobile_app/presentation/screens/main_screen.dart';
