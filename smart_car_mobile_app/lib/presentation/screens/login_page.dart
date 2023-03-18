@@ -15,6 +15,7 @@ class LoginPage extends GetView<LoginController> {
    final RxBool btnActive = false.obs;
   @override
   Widget build(BuildContext context) {
+    
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return GestureDetector(
