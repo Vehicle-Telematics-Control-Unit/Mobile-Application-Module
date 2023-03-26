@@ -43,17 +43,20 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.1.2
   flutter_neumorphic: ^3.2.0
+  flutter_polyline_points: ^1.0.0
   flutter_secure_storage: ^8.0.0
   flutter_signin_button: ^2.0.0
   flutter_spinkit: ^5.1.0
+  flutter_svg: ^2.0.4
   get: ^4.6.5
   get_storage: ^2.0.3
   google_fonts: ^4.0.0
-  icon_forest: ^1.1.8
+  google_maps_flutter: ^2.2.5
   json_annotation: ^4.8.0
   json_serializable: ^6.6.1
   line_icons: ^2.0.1
   page_transition: ^2.0.9
+  percent_indicator: ^4.2.3
   persistent_bottom_nav_bar: ^5.0.2
   platform_device_id: ^1.0.1
 
@@ -74,7 +77,16 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/Logo.png
+    - assets/images/
+    - assets/images/tesla.png
+    - assets/images/tesla2.png
+    - assets/images/vehicle2_logo.png
+    - assets/images/battery.png
+    - assets/images/maserati.png
+    - assets/images/tesla_top_view.png
+    - assets/images/car_top2.png
+    - assets/images/door_lock.svg
+    - assets/images/door_unlock.svg
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

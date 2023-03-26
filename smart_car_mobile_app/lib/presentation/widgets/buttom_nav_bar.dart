@@ -12,7 +12,7 @@ class BottomNavBar extends StatelessWidget {
 
   List<Widget> _buildScreens() {
     return [
-      const MainScreen(),
+      MainScreen(),
       const NavScreen(),
       const NotificationScreen(),
       const SettingsScreen(),
@@ -30,6 +30,7 @@ class BottomNavBar extends StatelessWidget {
         activeColorPrimary: CupertinoColors.white,
         inactiveColorPrimary: CupertinoColors.white,
       ),
+
       PersistentBottomNavBarItem(
         // title: ("Navigation"),
         icon: const Icon(Icons.navigation_sharp,
@@ -59,6 +60,7 @@ class BottomNavBar extends StatelessWidget {
         activeColorPrimary: CupertinoColors.white,
         inactiveColorPrimary: CupertinoColors.white,
       ),
+      
     ];
   }
 

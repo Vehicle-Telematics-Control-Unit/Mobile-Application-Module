@@ -24,6 +24,10 @@ mixin CasheManagerService {
     final storage = GetStorage();
     return storage.read('email');
   }
+  String getUserName(){
+    final storage = GetStorage();
+    return storage.read('username');
+  }
 
   String? getToken() {
     final storage = GetStorage();
