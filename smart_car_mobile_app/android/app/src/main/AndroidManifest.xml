@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.smart_car_mobile_app">
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="smart_car_mobile_app"
         android:name="${applicationName}"
@@ -30,5 +31,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+         <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyC4BJn349fKc-WhkKwiouYOE8yDuGUG8zg"/>
     </application>
 </manifest>

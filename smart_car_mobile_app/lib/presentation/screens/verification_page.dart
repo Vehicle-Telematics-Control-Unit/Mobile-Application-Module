@@ -6,6 +6,7 @@ import 'package:smart_car_mobile_app/controllers/authentication_controller.dart'
 
 import '../widgets/buttom_nav_bar.dart';
 
+// ignore: must_be_immutable
 class VerificationPage extends StatefulWidget {
   VerificationPage({super.key});
   AuthenticationController authenticationController =
