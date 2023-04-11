@@ -36,7 +36,7 @@ class PressureIndicatorCard extends StatelessWidget {
           IconButton(
               onPressed: () {
                 Get.to(
-                  const TyrePressureScreen(),
+                  () =>  const TyrePressureScreen(),
                   transition: Transition.downToUp,
                   duration: const Duration(milliseconds: 400),
                 );
