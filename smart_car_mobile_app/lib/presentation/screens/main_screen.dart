@@ -31,7 +31,7 @@ class MainScreen extends StatelessWidget {
                 Text(
                   'Hello, ${authenticationController.getUserName()} !',
                   style: GoogleFonts.lato(
-                      fontSize: 20,
+                      fontSize: 25,
                       letterSpacing: 0.01,
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.bold),
