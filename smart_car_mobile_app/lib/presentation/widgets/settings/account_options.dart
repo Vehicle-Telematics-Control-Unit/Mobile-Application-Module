@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AccountOptions extends StatelessWidget {
-  IconData icon;
-  String title;
-  var screenWidth;
-  var screenHeight;
-  AccountOptions(
+  final IconData icon;
+  final String title;
+  // ignore: prefer_typing_uninitialized_variables
+  final  screenWidth;
+   // ignore: prefer_typing_uninitialized_variables
+  final  screenHeight;
+  const AccountOptions(
       {Key? key,
       required this.title,
       required this.icon,

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
-import 'package:smart_car_mobile_app/presentation/widgets/settings/notifications_options.dart';
+
+
+import '../../../controllers/authentication_controller.dart';
 
 class SignOutOption extends StatelessWidget {
-  const SignOutOption({
+  final AuthenticationController authenticationController =
+      Get.find<AuthenticationController>();
+  SignOutOption({
     super.key,
     required this.screenWidth,
   });
@@ -18,7 +24,13 @@ class SignOutOption extends StatelessWidget {
         width: screenWidth * 0.02,
       ),
       TextButton(
-          onPressed: () {},
+          onPressed: () {
+            authenticationController.logOut();
+            authenticationController.removeUsername();
+            authenticationController.removeEmail();
+            // Get.offAll(() => LoginPage());
+            Get.offAllNamed("/login_page");
+          },
           child: Align(
             alignment: Alignment.centerLeft,
             child: Text(

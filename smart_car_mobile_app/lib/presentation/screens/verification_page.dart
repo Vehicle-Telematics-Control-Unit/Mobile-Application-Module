@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_car_mobile_app/controllers/authentication_controller.dart';
 
-import '../widgets/buttom_nav_bar.dart';
+import '../../controllers/login_controller.dart';
 
 // ignore: must_be_immutable
 class VerificationPage extends StatefulWidget {
   VerificationPage({super.key});
   AuthenticationController authenticationController =
       Get.find<AuthenticationController>();
+  final loginController = Get.find<LoginController>();
   @override
   State<VerificationPage> createState() => _VerificationPageState();
 }
@@ -19,7 +21,7 @@ class _VerificationPageState extends State<VerificationPage> {
   late FocusNode secondPinFocusNode;
   late FocusNode thirdPinFocusNode;
   late FocusNode fourthPinFocusNode;
-
+  final loginController = Get.find<LoginController>();
   @override
   void initState() {
     secondPinFocusNode = FocusNode();
@@ -83,6 +85,8 @@ class _VerificationPageState extends State<VerificationPage> {
                 height: 68,
                 width: 64,
                 child: TextFormField(
+                  controller: loginController.blockOneController,
+                  onSaved: (value) => loginController.blockOneController,
                   cursorColor: const Color.fromARGB(255, 145, 55, 55),
                   style: const TextStyle(fontSize: 24),
                   autofocus: true,
@@ -110,6 +114,8 @@ class _VerificationPageState extends State<VerificationPage> {
                 height: 68,
                 width: 64,
                 child: TextFormField(
+                  controller: loginController.blockTwoController,
+                  onSaved: (value) => loginController.blockTwoController,
                   cursorColor: const Color.fromARGB(255, 145, 55, 55),
                   focusNode: secondPinFocusNode,
                   style: const TextStyle(fontSize: 24),
@@ -137,6 +143,8 @@ class _VerificationPageState extends State<VerificationPage> {
                 height: 68,
                 width: 64,
                 child: TextFormField(
+                  controller: loginController.blockThreeController,
+                  onSaved: (value) => loginController.blockThreeController,
                   cursorColor: const Color.fromARGB(255, 145, 55, 55),
                   focusNode: thirdPinFocusNode,
                   style: const TextStyle(fontSize: 24),
@@ -164,6 +172,8 @@ class _VerificationPageState extends State<VerificationPage> {
                 height: 68,
                 width: 64,
                 child: TextFormField(
+                  controller: loginController.blockFourController,
+                  onSaved: (value) => loginController.blockFourController,
                   cursorColor: const Color.fromARGB(255, 145, 55, 55),
                   focusNode: fourthPinFocusNode,
                   style: const TextStyle(fontSize: 24),
@@ -200,8 +210,13 @@ class _VerificationPageState extends State<VerificationPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  widget.authenticationController.isLogged.value = true;
-                  Get.to(const BottomNavBar());
+                  widget.loginController.verifyMail();
+                  
+                  // if it is verified then
+
+                  // if (widget.authenticationController.isLogged.value == true) {
+                  //   Get.to(() => const BottomNavBar());
+                  // }
                 },
                 style: ElevatedButton.styleFrom(
                     fixedSize: const Size(40, 40),
@@ -210,9 +225,13 @@ class _VerificationPageState extends State<VerificationPage> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     elevation: 15),
-                child: Text(' Verify ',
-                    style: GoogleFonts.lato(
-                        fontSize: 15, fontWeight: FontWeight.bold)),
+                child: Obx(() =>
+                    widget.loginController.verificationEmailIsLoading.value
+                        ? SpinKitPulse(
+                            color: Colors.grey[50],
+                            size: 30,
+                          )
+                        : const Text('Verify')),
               ),
             ),
           )
@@ -233,7 +252,7 @@ class _VerificationPageState extends State<VerificationPage> {
             )),
         TweenAnimationBuilder(
           tween: Tween(begin: 30.0, end: 0),
-          duration: const Duration(seconds: 30),
+          duration: const Duration(seconds: 45),
           builder: (context, value, child) => Text(
             "00:${value.toInt()}",
             style: const TextStyle(color: Color.fromARGB(182, 227, 34, 20)),

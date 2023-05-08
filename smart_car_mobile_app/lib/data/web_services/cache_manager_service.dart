@@ -38,4 +38,13 @@ mixin CasheManagerService {
     final storage = GetStorage();
     await storage.remove('token');
   }
+  Future<void> removeUsername() async {
+    final storage = GetStorage();
+    await storage.remove('username');
+  }
+  Future<void> removeEmail() async {
+    final storage = GetStorage();
+    await storage.remove('email');
+  }
+
 }

@@ -1,15 +1,15 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 class NotificationOptions extends StatefulWidget {
-  IconData icon;
-  String title;
-  var screenWidth;
-  var screenHeight;
+  final IconData icon;
+  final String title;
+  final  screenWidth;
+  final screenHeight;
   bool value;
-  NotificationOptions(
+   NotificationOptions(
       {Key? key,
       required this.title,
       required this.icon,

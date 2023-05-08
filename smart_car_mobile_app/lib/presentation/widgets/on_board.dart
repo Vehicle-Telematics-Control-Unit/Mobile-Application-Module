@@ -13,6 +13,6 @@ class OnBoard extends StatelessWidget {
         Get.find<AuthenticationController>();
     return Obx(() => authenticationController.isLogged.value
         ?  MainScreen()
-        : LoginPage());
+        : const LoginPage());
   }
 }

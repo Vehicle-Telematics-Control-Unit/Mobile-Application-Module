@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:smart_car_mobile_app/bindings/login_bindings/login_bindings.dart';
 import 'package:smart_car_mobile_app/presentation/screens/splash_screen.dart';
 import 'package:smart_car_mobile_app/route_generator.dart';
 
@@ -37,6 +38,7 @@ class VehiclePlus extends StatelessWidget {
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.hippieBlue),
       themeMode: ThemeMode.dark,
       home: const SplashScreen(),
+      initialBinding: LoginBinding(),
       // initialRoute: '/',
       debugShowCheckedModeBanner: false,
       onGenerateRoute: routeGenerator.generateRoute,
