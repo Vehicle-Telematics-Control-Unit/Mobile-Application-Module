@@ -40,12 +40,14 @@ class _LoginButtonState extends State<LoginButton> {
               borderRadius: BorderRadius.circular(10),
             ),
             elevation: 15),
-        child: Obx(() => widget.loginController.isLoading.value
-            ? SpinKitPulse(
-                color: Colors.grey[50],
-                size: 30,
-              )
-            : const Text('Log In ')),
+        child: Obx(() {
+          return widget.loginController.isLoading.value
+              ? SpinKitPulse(
+                  color: Colors.grey[50],
+                  size: 30,
+                )
+              : const Text('Log In ');
+        }),
       ),
     );
   }

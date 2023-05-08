@@ -16,7 +16,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final loginController = Get.find<LoginController>();
+  final loginController = Get.put(LoginController());
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   final RxBool btnActive = false.obs;
 
@@ -24,6 +24,8 @@ class _LoginPageState extends State<LoginPage> {
   void dispose() {
     super.dispose();
   }
+
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +72,4 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-
 }

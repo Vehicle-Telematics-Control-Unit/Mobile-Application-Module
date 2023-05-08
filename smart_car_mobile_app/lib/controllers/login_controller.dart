@@ -7,6 +7,7 @@ import 'package:smart_car_mobile_app/controllers/authentication_controller.dart'
 import 'package:smart_car_mobile_app/data/models/login-response.dart';
 import 'package:smart_car_mobile_app/data/models/verify-user-command.dart';
 import 'package:smart_car_mobile_app/data/web_services/user_web_services.dart';
+import 'package:smart_car_mobile_app/presentation/screens/login_page.dart';
 import 'package:smart_car_mobile_app/utils/routes.dart';
 
 class LoginController extends GetxController {
@@ -73,6 +74,8 @@ class LoginController extends GetxController {
             authenticationController.saveUsername(loginResponse.username);
             authenticationController.saveEmail(loginResponse.email);
             authenticationController.isLogged.value = true;
+            usernameController.clear();
+            passwordController.clear();
             debugPrint('saved token is ${authenticationController.getToken()}');
 
             // debugPrint('saved email is ${loginResponse.email}');
@@ -80,7 +83,7 @@ class LoginController extends GetxController {
             // usernameController.text = "";
             // passwordController.text = "";
 
-            Get.toNamed(AppRoutes.bottomNavBar); // Nav Button
+            Get.offAll(AppRoutes.bottomNavBar); // Nav Button
 
             // usernameController.clear();
             // passwordController.clear();
@@ -98,6 +101,8 @@ class LoginController extends GetxController {
           Get.showSnackbar(snackBar("Invalid password"));
           // Get.dialog(const LoginDialogAlert(errorMessage: 'Invalid password'));
         }
+      } else {
+        Get.showSnackbar(snackBar("An error occured"));
       }
     } finally {
       isLoading(false);
@@ -127,6 +132,10 @@ class LoginController extends GetxController {
           authenticationController.isLogged.value = true;
           debugPrint('saved token is ${authenticationController.getToken()}');
           Get.toNamed(AppRoutes.bottomNavBar); // Nav Button
+          blockOneController.text = '';
+          blockTwoController.text = '';
+          blockThreeController.text = '';
+          blockFourController.text = '';
         }
       }
     } on DioError catch (e) {
@@ -138,6 +147,7 @@ class LoginController extends GetxController {
         } else if (e.response?.data == "Invalid Token") {
           Get.showSnackbar(snackBar("Invalid Token"));
         } else {
+          Get.showSnackbar(snackBar("An error occured"));
           throw Exception(e.error);
         }
       }
@@ -159,6 +169,12 @@ class LoginController extends GetxController {
       borderRadius: 10,
       shouldIconPulse: true,
     );
+  }
+
+  Future<void> logout() async {
+    authenticationController.logOut();
+    authenticationController.removeUsername();
+    authenticationController.removeEmail();
   }
 
   String? validatePassword(String? value) {

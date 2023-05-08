@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:smart_car_mobile_app/controllers/login_controller.dart';
+import 'package:smart_car_mobile_app/presentation/screens/login_page.dart';
 
 import '../../../controllers/authentication_controller.dart';
 
-class SignOutOption extends StatelessWidget {
-  final AuthenticationController authenticationController =
-      Get.find<AuthenticationController>();
+class SignOutOption extends StatefulWidget {
   SignOutOption({
     super.key,
     required this.screenWidth,
@@ -17,19 +16,33 @@ class SignOutOption extends StatelessWidget {
   final double screenWidth;
 
   @override
+  State<SignOutOption> createState() => _SignOutOptionState();
+}
+
+class _SignOutOptionState extends State<SignOutOption> {
+  final AuthenticationController authenticationController =
+      Get.find<AuthenticationController>();
+  final LoginController loginController = Get.find<LoginController>();
+
+  @override
   Widget build(BuildContext context) {
     return Row(children: [
       const Icon(Icons.logout, color: Color.fromRGBO(255, 255, 255, 0.8)),
       SizedBox(
-        width: screenWidth * 0.02,
+        width: widget.screenWidth * 0.02,
       ),
       TextButton(
           onPressed: () {
-            authenticationController.logOut();
-            authenticationController.removeUsername();
-            authenticationController.removeEmail();
+            loginController.logout();
+            Get.offAll(() => const LoginPage());
+            loginController.usernameController.text = '';
+            loginController.passwordController.text = '';
+            setState(() {});
             // Get.offAll(() => LoginPage());
-            Get.offAllNamed("/login_page");
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginPage()),
+            );
           },
           child: Align(
             alignment: Alignment.centerLeft,

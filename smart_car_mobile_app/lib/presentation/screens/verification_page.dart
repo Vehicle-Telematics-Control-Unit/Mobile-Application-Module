@@ -30,6 +30,16 @@ class _VerificationPageState extends State<VerificationPage> {
     super.initState();
   }
 
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   // Reset the state of the TextFields when navigating back to this screen
+  //   loginController.blockOneController.clear();
+  //   loginController.blockTwoController.clear();
+  //   loginController.blockThreeController.clear();
+  //   loginController.blockFourController.clear();
+  // }
+
   @override
   void dispose() {
     secondPinFocusNode.dispose();
@@ -67,7 +77,7 @@ class _VerificationPageState extends State<VerificationPage> {
                 color: Colors.grey[500], fontWeight: FontWeight.bold),
           ),
           Text(
-            widget.authenticationController.getEmail(),
+            widget.authenticationController.getEmail() ?? "",
             style: GoogleFonts.lato(
               color: Colors.grey[500],
               fontWeight: FontWeight.bold,
@@ -212,6 +222,7 @@ class _VerificationPageState extends State<VerificationPage> {
                 onPressed: () {
                   widget.loginController.verifyMail();
                   
+                  setState(() {});
                   // if it is verified then
 
                   // if (widget.authenticationController.isLogged.value == true) {
