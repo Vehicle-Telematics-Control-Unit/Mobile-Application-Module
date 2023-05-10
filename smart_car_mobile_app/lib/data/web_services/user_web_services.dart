@@ -1,11 +1,10 @@
 import 'dart:io';
-
+import 'package:flutter/cupertino.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
-
-import '../../presentation/widgets/login/alert_dialog.dart';
+import 'package:smart_car_mobile_app/data/models/verify-user-command.dart';
 import '../../utils/api_endpoints.dart';
 
 import '../models/user.dart';
@@ -28,6 +27,17 @@ class UserWebServices extends GetConnect {
     dio = Dio(options);
   }
 
+  Future<dynamic> verifyEmail(VerifyUserCommand verifyUserCommand) async {
+    try {
+      Response response = await dio.post(ApiEndPoints.verifyMail,
+          data: verifyUserCommand.toJson());
+      await Future.delayed(const Duration(seconds: 2));
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<dynamic> userLogin(String username, String password) async {
     late String? deviceId;
     User user;
@@ -44,15 +54,8 @@ class UserWebServices extends GetConnect {
           await dio.post(ApiEndPoints.loginUrl, data: user.toJson());
       await Future.delayed(const Duration(seconds: 2));
       return response;
-    } on DioError catch (e) {
-      if (e.response?.statusCode == 401) {
-        debugPrint("status code ${e.response?.statusCode}");
-        if (e.response?.data["errorCode"] == -1) {
-          Get.dialog(const LoginDialogAlert(errorMessage: 'Invalid email'));
-        } else if (e.response?.data["errorCode"] == -2) {
-          Get.dialog(const LoginDialogAlert(errorMessage: 'Invalid password'));
-        }
-      }
+    } catch (e) {
+      rethrow;
     }
   }
 }

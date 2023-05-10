@@ -5,28 +5,33 @@ import 'package:get/get.dart';
 import 'package:smart_car_mobile_app/controllers/login_controller.dart';
 
 // ignore: must_be_immutable
-class LoginButton extends StatelessWidget {
-  LoginButton({
-    super.key,
-    required this.loginController,
-    required this.screenWidth,
-  });
+class LoginButton extends StatefulWidget {
+  LoginButton(
+      {super.key,
+      required this.loginController,
+      required this.screenWidth,
+      required this.loginFormKey});
 
   LoginController loginController;
   final double screenWidth;
+  GlobalKey<FormState> loginFormKey;
 
+  @override
+  State<LoginButton> createState() => _LoginButtonState();
+}
+
+class _LoginButtonState extends State<LoginButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: screenWidth * 0.7,
+      width: widget.screenWidth * 0.7,
       child: ElevatedButton(
         onPressed: () {
-          loginController.loginUser();
-          // setState(() {
-          //   if (_formkey.currentState!.validate()) {
-          //     Navigator.of(context).pushNamed('/verification_page');
-          //   }
-          // });
+          // loginController.loginUser();
+          bool isValidate = widget.loginFormKey.currentState!.validate();
+          if (isValidate) {
+            widget.loginController.loginUser();
+          }
         },
         style: ElevatedButton.styleFrom(
             fixedSize: const Size(40, 40),
@@ -35,12 +40,14 @@ class LoginButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             elevation: 15),
-        child: Obx(() => loginController.isLoading.value
-            ? SpinKitPulse(
-                color: Colors.grey[50],
-                size: 30,
-              )
-            : const Text('Log In ')),
+        child: Obx(() {
+          return widget.loginController.isLoading.value
+              ? SpinKitPulse(
+                  color: Colors.grey[50],
+                  size: 30,
+                )
+              : const Text('Log In ');
+        }),
       ),
     );
   }

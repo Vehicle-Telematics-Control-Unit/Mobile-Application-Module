@@ -20,6 +20,4 @@ class AuthenticationController extends GetxController with CasheManagerService {
       isLogged.value = true;
     }
   }
-
- 
 }

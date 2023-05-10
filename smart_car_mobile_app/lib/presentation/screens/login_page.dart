@@ -8,14 +8,27 @@ import '../widgets/login/login_button.dart';
 import '../widgets/login/logo_area.dart';
 import '../widgets/login/password_field.dart';
 
-class LoginPage extends GetView<LoginController> {
-  LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final loginController = Get.put(LoginController());
-   final RxBool btnActive = false.obs;
+  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  final RxBool btnActive = false.obs;
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+ 
+
   @override
   Widget build(BuildContext context) {
-    
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return GestureDetector(
@@ -27,7 +40,7 @@ class LoginPage extends GetView<LoginController> {
             child: Center(
               child: Form(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                key: loginController.loginFormKey,
+                key: loginFormKey,
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -47,7 +60,10 @@ class LoginPage extends GetView<LoginController> {
                       SizedBox(
                         height: screenHeight * 0.04,
                       ),
-                      LoginButton(loginController: loginController, screenWidth: screenWidth),
+                      LoginButton(
+                          loginController: loginController,
+                          screenWidth: screenWidth,
+                          loginFormKey: loginFormKey),
                     ]),
               ),
             ),
@@ -57,4 +73,3 @@ class LoginPage extends GetView<LoginController> {
     );
   }
 }
-
