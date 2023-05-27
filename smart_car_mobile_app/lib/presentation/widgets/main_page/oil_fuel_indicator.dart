@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 
 class OilFuelIndicator extends StatelessWidget {
@@ -64,41 +62,41 @@ class OilFuelIndicator extends StatelessWidget {
               // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0, left: 18),
-                    child: Text(
-                      'oil level',
-                      style: GoogleFonts.lato(
-                        fontSize: 16,
-                        letterSpacing: 0.01,
-                        fontStyle: FontStyle.normal,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12.0, right: 18),
-                    child: Text('30%',
-                        style: GoogleFonts.oswald(
-                            fontSize: 14,
-                            letterSpacing: 0.01,
-                            fontStyle: FontStyle.normal,
-                            color: const Color.fromRGBO(255, 255, 255, 0.8))),
-                  )
+                children: const [
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 20.0, left: 18),
+                  //   child: Text(
+                  //     'oil level',
+                  //     style: GoogleFonts.lato(
+                  //       fontSize: 16,
+                  //       letterSpacing: 0.01,
+                  //       fontStyle: FontStyle.normal,
+                  //     ),
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 12.0, right: 18),
+                  //   child: Text('30%',
+                  //       style: GoogleFonts.oswald(
+                  //           fontSize: 14,
+                  //           letterSpacing: 0.01,
+                  //           fontStyle: FontStyle.normal,
+                  //           color: const Color.fromRGBO(255, 255, 255, 0.8))),
+                  // )
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: LinearPercentIndicator(
-                  lineHeight: 6,
-                  percent: 0.30,
-                  animation: true,
-                  animationDuration: 2500,
-                  backgroundColor: const Color.fromARGB(255, 72, 72, 72),
-                  barRadius: const Radius.circular(7),
-                  maskFilter: const MaskFilter.blur(BlurStyle.solid, 4.0),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(10),
+              //   child: LinearPercentIndicator(
+              //     lineHeight: 6,
+              //     percent: 0.30,
+              //     animation: true,
+              //     animationDuration: 2500,
+              //     backgroundColor: const Color.fromARGB(255, 72, 72, 72),
+              //     barRadius: const Radius.circular(7),
+              //     maskFilter: const MaskFilter.blur(BlurStyle.solid, 4.0),
+              //   ),
+              // ),
             ])));
   }
 }

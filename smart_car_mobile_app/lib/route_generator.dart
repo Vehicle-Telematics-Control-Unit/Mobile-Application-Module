@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smart_car_mobile_app/data/web_services/user_web_services.dart';
+import 'package:smart_car_mobile_app/services/web_services/user_web_services.dart';
 import 'package:smart_car_mobile_app/presentation/screens/login_page.dart';
 import 'package:smart_car_mobile_app/presentation/screens/splash_screen.dart';
 import 'package:smart_car_mobile_app/presentation/screens/verification_page.dart';
@@ -23,7 +23,7 @@ class RouteGenerator {
       case '/verification_page':
         return MaterialPageRoute(builder: (_) => VerificationPage());
       case '/bottom_nav_bar':
-        return MaterialPageRoute(builder: (_) => const BottomNavBar());
+        return MaterialPageRoute(builder: (_) =>  BottomNavBar());
     }
     return null;
   }

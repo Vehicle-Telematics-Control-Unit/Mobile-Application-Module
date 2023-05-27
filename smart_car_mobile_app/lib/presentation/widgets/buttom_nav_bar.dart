@@ -1,15 +1,33 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+
+import 'package:smart_car_mobile_app/controllers/notification_controller.dart';
+
 import 'package:smart_car_mobile_app/presentation/screens/nav_screen.dart';
+import 'package:badges/badges.dart' as badges;
 
 import '../screens/main_screen.dart';
 import '../screens/notification_screen.dart';
 import '../screens/settings_screen.dart';
 
-class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({super.key});
+class BottomNavBar extends StatefulWidget {
+  NotificationController? notificationController;
 
+  BottomNavBar({
+    super.key,
+    this.notificationController,
+  });
+
+  int count = 1;
+  @override
+  State<BottomNavBar> createState() => _BottomNavBarState();
+}
+
+class _BottomNavBarState extends State<BottomNavBar> {
   List<Widget> _buildScreens() {
     return [
       MainScreen(),
@@ -20,6 +38,7 @@ class BottomNavBar extends StatelessWidget {
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
+    var notificationController = Get.find<NotificationController>();
     return [
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.home_sharp,
@@ -30,7 +49,6 @@ class BottomNavBar extends StatelessWidget {
         activeColorPrimary: CupertinoColors.white,
         inactiveColorPrimary: CupertinoColors.white,
       ),
-
       PersistentBottomNavBarItem(
         // title: ("Navigation"),
         icon: const Icon(Icons.navigation_sharp,
@@ -42,10 +60,25 @@ class BottomNavBar extends StatelessWidget {
       ),
       PersistentBottomNavBarItem(
         // title: ("Notifications"),
-        icon: const Icon(Icons.notifications,
-            shadows: [Shadow(color: Colors.white70, blurRadius: 15.0)]),
-        inactiveIcon: const Icon(Icons.notifications_outlined,
-            shadows: [Shadow(color: Colors.white70, blurRadius: 15.0)]),
+        icon: Obx(
+          () {
+            notificationController.markAllAsRead();
+            return const Icon(Icons.notifications,
+                shadows: [Shadow(color: Colors.white70, blurRadius: 15.0)]);
+          },
+        ),
+        inactiveIcon: Obx(() {
+          return notificationController.unreadCount > 0
+              ? badges.Badge(
+                  stackFit: StackFit.passthrough,
+                  badgeContent:
+                      Text(notificationController.unreadCount.toString()),
+                  child: const Icon(Icons.notifications_outlined, shadows: [
+                    Shadow(color: Colors.white70, blurRadius: 15.0)
+                  ]))
+              : const Icon(Icons.notifications_outlined,
+                  shadows: [Shadow(color: Colors.white70, blurRadius: 15.0)]);
+        }),
         activeColorPrimary: CupertinoColors.white,
         inactiveColorPrimary: CupertinoColors.white,
       ),
@@ -60,8 +93,49 @@ class BottomNavBar extends StatelessWidget {
         activeColorPrimary: CupertinoColors.white,
         inactiveColorPrimary: CupertinoColors.white,
       ),
-      
     ];
+  }
+
+  // @pragma('vm:entry-point')
+  // Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  //   // Initialize the FlutterLocalNotificationsPlugin
+  //   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  //   // Create a new AndroidNotificationChannel
+  //   const androidNotificationChannel = AndroidNotificationChannel(
+  //     'default_channel_id',
+  //     'Default Channel',
+  //     importance: Importance.max,
+  //   );
+
+  //   // Register the AndroidNotificationChannel with the FlutterLocalNotificationsPlugin
+  //   await flutterLocalNotificationsPlugin
+  //       .resolvePlatformSpecificImplementation<
+  //           AndroidFlutterLocalNotificationsPlugin>()
+  //       ?.createNotificationChannel(androidNotificationChannel);
+
+  //   debugPrint("Handling a background message: ${message.messageId}");
+
+  //   setState(() {
+  //     NotificationManager().notifications.insert(0, message);
+  //   });
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+    // NotificationHandler.registerOnFirebase(firebaseMessaging);
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      // NotificationManager().notifications.insert(0, message);
+
+      final notificationController = Get.find<NotificationController>();
+      notificationController.addNotification(
+          message.notification?.title ?? "", message.notification?.body ?? "");
+      debugPrint(
+          ' from foreground Title: ${message.notification?.title ?? ""}, Message: ${message.notification?.body ?? ""}');
+    });
   }
 
   @override

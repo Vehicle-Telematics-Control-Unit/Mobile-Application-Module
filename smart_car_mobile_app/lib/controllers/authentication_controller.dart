@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:smart_car_mobile_app/data/web_services/cache_manager_service.dart';
+import 'package:smart_car_mobile_app/services/web_services/cache_manager_service.dart';
 
 class AuthenticationController extends GetxController with CasheManagerService {
   final isLogged = false.obs;

@@ -10,8 +10,10 @@ class VerifyUserCommand {
   String? token;
   @JsonKey(name: "deviceId")
   String? deviceId;
+  @JsonKey(name: "notificationToken")
+  String? notificationToken;
 
-  VerifyUserCommand({this.userEmail, this.token, this.deviceId});
+  VerifyUserCommand({this.userEmail, this.token, this.deviceId,this.notificationToken});
   factory VerifyUserCommand.fromJson(Map<String, dynamic> json) =>
       _$VerifyUserCommandFromJson(json);
   Map<String, dynamic> toJson() => _$VerifyUserCommandToJson(this);

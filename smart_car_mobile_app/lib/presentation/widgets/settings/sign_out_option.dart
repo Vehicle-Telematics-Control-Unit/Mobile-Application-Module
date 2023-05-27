@@ -8,7 +8,7 @@ import 'package:smart_car_mobile_app/presentation/screens/login_page.dart';
 import '../../../controllers/authentication_controller.dart';
 
 class SignOutOption extends StatefulWidget {
-  SignOutOption({
+  const SignOutOption({
     super.key,
     required this.screenWidth,
   });

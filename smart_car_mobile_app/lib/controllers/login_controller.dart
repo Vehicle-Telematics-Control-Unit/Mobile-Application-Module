@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
@@ -6,9 +7,10 @@ import 'package:platform_device_id/platform_device_id.dart';
 import 'package:smart_car_mobile_app/controllers/authentication_controller.dart';
 import 'package:smart_car_mobile_app/data/models/login-response.dart';
 import 'package:smart_car_mobile_app/data/models/verify-user-command.dart';
-import 'package:smart_car_mobile_app/data/web_services/user_web_services.dart';
-import 'package:smart_car_mobile_app/presentation/screens/login_page.dart';
+import 'package:smart_car_mobile_app/services/web_services/user_web_services.dart';
 import 'package:smart_car_mobile_app/utils/routes.dart';
+
+import '../services/notification_services/notification_handler.dart';
 
 class LoginController extends GetxController {
   late UserWebServices userWebServices;
@@ -59,8 +61,13 @@ class LoginController extends GetxController {
 
     isLoading(true);
     try {
+      final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+      String? notificationToken;
+      // register device on Firebase and retrive token
+      notificationToken =
+          await NotificationHandler.registerOnFirebase(firebaseMessaging);
       Response response = await userWebServices.userLogin(
-          usernameController.text, passwordController.text);
+          usernameController.text, passwordController.text, notificationToken);
 
       if (response.statusCode == 200) {
         // 200
@@ -77,20 +84,10 @@ class LoginController extends GetxController {
             usernameController.clear();
             passwordController.clear();
             debugPrint('saved token is ${authenticationController.getToken()}');
-
-            // debugPrint('saved email is ${loginResponse.email}');
-
-            // usernameController.text = "";
-            // passwordController.text = "";
-
             Get.offAll(AppRoutes.bottomNavBar); // Nav Button
-
-            // usernameController.clear();
-            // passwordController.clear();
           }
         }
       }
-      // loginFormKey.currentState!.reset();
     } on DioError catch (e) {
       if (e.response?.statusCode == 401) {
         debugPrint("status code ${e.response?.statusCode}");
@@ -112,6 +109,13 @@ class LoginController extends GetxController {
   Future<void> verifyMail() async {
     verificationEmailIsLoading(true);
     try {
+      final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+      String? notificationToken;
+      // register device on Firebase and retrive token
+      notificationToken =
+          await NotificationHandler.registerOnFirebase(firebaseMessaging);
+
+      debugPrint("notificationToken is $notificationToken");
       String? deviceId = await PlatformDeviceId.getDeviceId;
       String? otpCode = blockOneController.text +
           blockTwoController.text +
@@ -120,7 +124,8 @@ class LoginController extends GetxController {
       VerifyUserCommand verifyUserCommand = VerifyUserCommand(
           deviceId: deviceId,
           userEmail: authenticationController.getEmail(),
-          token: otpCode);
+          token: otpCode,
+          notificationToken: notificationToken);
       debugPrint('user token is ${verifyUserCommand.token}');
       Response response = await userWebServices.verifyEmail(verifyUserCommand);
       if (response.statusCode == 200) {

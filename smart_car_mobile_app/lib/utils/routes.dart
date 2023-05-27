@@ -12,7 +12,7 @@ class AppPages {
       page: () => const LoginPage(),
     ),
     GetPage(name: AppRoutes.verificationScreen, page: () => VerificationPage()),
-    GetPage(name: AppRoutes.bottomNavBar, page: () => const BottomNavBar())
+    GetPage(name: AppRoutes.bottomNavBar, page: () => BottomNavBar())
   ];
 }
 
