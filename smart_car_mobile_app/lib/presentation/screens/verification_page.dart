@@ -77,7 +77,7 @@ class _VerificationPageState extends State<VerificationPage> {
                 color: Colors.grey[500], fontWeight: FontWeight.bold),
           ),
           Text(
-            widget.authenticationController.getEmail() ?? "",
+            widget.authenticationController.getEmail(),
             style: GoogleFonts.lato(
               color: Colors.grey[500],
               fontWeight: FontWeight.bold,

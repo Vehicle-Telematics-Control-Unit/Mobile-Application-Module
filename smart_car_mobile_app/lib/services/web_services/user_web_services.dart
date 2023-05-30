@@ -7,7 +7,7 @@ import 'package:get/get.dart' hide Response;
 import 'package:smart_car_mobile_app/data/models/verify-user-command.dart';
 import '../../utils/api_endpoints.dart';
 
-import '../models/user.dart';
+import '../../data/models/user.dart';
 
 class UserWebServices extends GetConnect {
   late Dio dio;
@@ -38,7 +38,9 @@ class UserWebServices extends GetConnect {
     }
   }
 
-  Future<dynamic> userLogin(String username, String password) async {
+
+
+  Future<dynamic> userLogin(String username, String password, String? notificationToken) async {
     late String? deviceId;
     User user;
     try {
@@ -48,8 +50,8 @@ class UserWebServices extends GetConnect {
       debugPrint("error in ${e.toString()}");
     }
     try {
-      user = User(username: username, password: password, deviceId: deviceId);
-      debugPrint("json user ${(user.toJson()).toString()}");
+      user = User(username: username, password: password, deviceId: deviceId,notificationToken: notificationToken);
+      
       Response response =
           await dio.post(ApiEndPoints.loginUrl, data: user.toJson());
       await Future.delayed(const Duration(seconds: 2));

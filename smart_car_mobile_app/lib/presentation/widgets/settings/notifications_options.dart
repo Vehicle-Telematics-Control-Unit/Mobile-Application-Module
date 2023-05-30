@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -6,10 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 class NotificationOptions extends StatefulWidget {
   final IconData icon;
   final String title;
-  final  screenWidth;
+  final screenWidth;
   final screenHeight;
   bool value;
-   NotificationOptions(
+  NotificationOptions(
       {Key? key,
       required this.title,
       required this.icon,

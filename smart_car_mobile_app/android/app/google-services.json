@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "826603116678",
+    "project_id": "vehicleplus-notifications",
+    "storage_bucket": "vehicleplus-notifications.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826603116678:android:cfedea3d7d376de7b0d907",
+        "android_client_info": {
+          "package_name": "com.example.smart_car_mobile_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "826603116678-oi2g75795lgbtn9mh7rdshossvifd9fo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCbCOrSSQ-06R4YfucKwcNsvyWMKRRUDQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "826603116678-oi2g75795lgbtn9mh7rdshossvifd9fo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
