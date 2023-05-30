@@ -3,9 +3,11 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  connectivity_plus_windows
   firebase_core
   flutter_localization
   flutter_secure_storage_windows
+  network_info_plus_windows
   permission_handler_windows
   platform_device_id_windows
 )

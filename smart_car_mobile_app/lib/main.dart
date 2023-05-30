@@ -11,6 +11,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_car_mobile_app/bindings/login_bindings/login_bindings.dart';
 import 'package:smart_car_mobile_app/presentation/screens/splash_screen.dart';
+import 'package:smart_car_mobile_app/presentation/widgets/general/offline_wrapper.dart';
 import 'package:smart_car_mobile_app/route_generator.dart';
 import 'data/models/notification_model.dart';
 
@@ -91,35 +92,33 @@ class VehiclePlus extends StatefulWidget {
   State<VehiclePlus> createState() => _VehiclePlusState();
 }
 
-class _VehiclePlusState extends State<VehiclePlus>  {
+class _VehiclePlusState extends State<VehiclePlus> {
   RouteGenerator routeGenerator = RouteGenerator();
 
   @override
   void initState() {
     super.initState();
-    
   }
 
   @override
   void dispose() {
-    
     super.dispose();
   }
-
-
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      //theme: FlexThemeData.light(scheme: FlexScheme.hippieBlue),
-      darkTheme: FlexThemeData.dark(scheme: FlexScheme.hippieBlue),
-      themeMode: ThemeMode.dark,
-      home: const SplashScreen(),
-      initialBinding: LoginBinding(),
-      // initialRoute: '/',
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: routeGenerator.generateRoute,
+    return OfflineWrapper(
+      child: GetMaterialApp(
+        //theme: FlexThemeData.light(scheme: FlexScheme.hippieBlue),
+        darkTheme: FlexThemeData.dark(scheme: FlexScheme.hippieBlue),
+        themeMode: ThemeMode.dark,
+        home: const SplashScreen(),
+        initialBinding: LoginBinding(),
+        // initialRoute: '/',
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: routeGenerator.generateRoute,
+      ),
     );
   }
 }

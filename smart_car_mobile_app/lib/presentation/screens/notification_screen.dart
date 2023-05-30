@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-
+import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,7 +29,7 @@ class _NotificationScreenState extends State<NotificationScreen>
       List<String> storedNotifications;
       storedNotifications =
           sharedPrefs.getStringList('backgroundNotifications') ?? [];
-      debugPrint('Found in SharedPrefs: ${storedNotifications.last}');
+
       final lastNotification = storedNotifications.last;
       final lastNotificationData = json.decode(lastNotification);
       final title = lastNotificationData['title'];
@@ -94,72 +94,76 @@ class _NotificationScreenState extends State<NotificationScreen>
         body: Obx(() {
           return Padding(
             padding: const EdgeInsets.only(top: 20),
-            child: ListView.separated(
-              itemCount: notificationController.notifications.length,
-              separatorBuilder: (context, index) => const Divider(
-                thickness: 1,
-                height: 0,
-              ),
-              itemBuilder: (context, index) {
-                final message = notificationController.notifications[index];
+            child: Scrollbar(
+              thickness: 4.0,
+              child: ListView.separated(
+                physics: const BouncingScrollPhysics(),
+                itemCount: notificationController.notifications.length,
+                separatorBuilder: (context, index) => const Divider(
+                  thickness: 1,
+                  height: 0,
+                ),
+                itemBuilder: (context, index) {
+                  final message = notificationController.notifications[index];
 
-                notificationController.notifications[index].isRead = true;
-                notificationController.notifications[index]
-                    .updateFormattedTimeStamp(
-                        notificationController.notifications[index].timestamp);
-                return Padding(
-                  padding: const EdgeInsets.only(right: 0),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ListTile(
-                      title: Text(message.title ?? "",
-                          style: GoogleFonts.sourceSansPro(
-                              fontSize: 18,
-                              letterSpacing: 0.01,
-                              color: const Color.fromRGBO(255, 255, 255, 0.8),
-                              fontStyle: FontStyle.normal,
-                              fontWeight: FontWeight.bold)),
-                      subtitle: Text(
-                        message.message ?? "",
-                      ),
-                      trailing: Obx(
-                        () {
-                          if (message.isLoading.value) {
-                            return Text(message.formattedTimestamp.value,
-                                style: GoogleFonts.sourceSansPro(
-                                    fontSize: 12,
-                                    letterSpacing: 0.01,
-                                    color: const Color.fromRGBO(
-                                        255, 255, 255, 0.6),
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.bold));
-                          } else {
-                            return Text(message.formattedTimestamp.value,
-                                style: GoogleFonts.sourceSansPro(
-                                    fontSize: 14,
-                                    letterSpacing: 0.01,
-                                    color: const Color.fromRGBO(
-                                        255, 255, 255, 0.5),
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.bold));
-                          }
+                  notificationController.notifications[index].isRead = true;
+                  notificationController.notifications[index]
+                      .updateFormattedTimeStamp(notificationController
+                          .notifications[index].timestamp);
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ListTile(
+                        title: Text(message.title ?? "",
+                            style: GoogleFonts.sourceSansPro(
+                                fontSize: 18,
+                                letterSpacing: 0.01,
+                                color: const Color.fromRGBO(255, 255, 255, 0.8),
+                                fontStyle: FontStyle.normal,
+                                fontWeight: FontWeight.bold)),
+                        subtitle: Text(
+                          message.message ?? "",
+                        ),
+                        trailing: Obx(
+                          () {
+                            if (message.isLoading.value) {
+                              return Text(message.formattedTimestamp.value,
+                                  style: GoogleFonts.sourceSansPro(
+                                      fontSize: 12,
+                                      letterSpacing: 0.01,
+                                      color: const Color.fromRGBO(
+                                          255, 255, 255, 0.6),
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.bold));
+                            } else {
+                              return Text(message.formattedTimestamp.value,
+                                  style: GoogleFonts.sourceSansPro(
+                                      fontSize: 14,
+                                      letterSpacing: 0.01,
+                                      color: const Color.fromRGBO(
+                                          255, 255, 255, 0.5),
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.bold));
+                            }
+                          },
+                        ),
+                        onTap: () {
+                          setState(() {
+                            notificationController
+                                .notifications[index].isTapped?.value = true;
+                          });
                         },
+                        tileColor: notificationController
+                                    .notifications[index].isTapped?.value ==
+                                false
+                            ? Colors.grey[900]
+                            : Colors.transparent,
                       ),
-                      onTap: () {
-                        setState(() {
-                          notificationController
-                              .notifications[index].isTapped?.value = true;
-                        });
-                      },
-                      tileColor: notificationController
-                                  .notifications[index].isTapped?.value ==
-                              false
-                          ? Colors.grey[900]
-                          : Colors.transparent,
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
           );
         }),
