@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get_storage/get_storage.dart';
 
 mixin CasheManagerService {
@@ -8,28 +9,28 @@ mixin CasheManagerService {
   }
 
   Future<bool> saveUsername(String? username) async {
-    await GetStorage.init();
     final storage = GetStorage();
     await storage.write('username', username);
     return true;
   }
-   Future<bool> saveEmail(String? email) async {
-    await GetStorage.init();
+
+  Future<bool> saveEmail(String? email) async {
     final storage = GetStorage();
     await storage.write('email', email);
     return true;
   }
 
-  String getEmail(){
+  String getEmail() {
     final storage = GetStorage();
     return storage.read('email');
   }
-  String getUserName(){
+
+  String getUserName() {
     final storage = GetStorage();
     return storage.read('username');
   }
 
-  String? getToken() {
+  String getToken() {
     final storage = GetStorage();
     return storage.read('token');
   }
@@ -38,13 +39,14 @@ mixin CasheManagerService {
     final storage = GetStorage();
     await storage.remove('token');
   }
+
   Future<void> removeUsername() async {
     final storage = GetStorage();
     await storage.remove('username');
   }
+
   Future<void> removeEmail() async {
     final storage = GetStorage();
     await storage.remove('email');
   }
-
 }

@@ -28,8 +28,8 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    userWebServices = Get.put(UserWebServices());
-    authenticationController = Get.put(AuthenticationController());
+    userWebServices = Get.find<UserWebServices>();
+    authenticationController = Get.find<AuthenticationController>();
     usernameController = TextEditingController();
     passwordController = TextEditingController();
     blockOneController = TextEditingController();
@@ -69,7 +69,7 @@ class LoginController extends GetxController {
       Response response = await userWebServices.userLogin(
           usernameController.text, passwordController.text, notificationToken);
 
-      if (response.statusCode == 200) {
+      if (response != null && response.statusCode == 200) {
         // 200
         if (response.data['message'] == "otp code sent") {
           authenticationController.saveEmail(response.data['email']);
@@ -77,7 +77,7 @@ class LoginController extends GetxController {
         } else {
           var loginResponse = LoginResponse.fromJson(response.data);
           if (loginResponse.token != null) {
-            authenticationController.login(loginResponse.token);
+            authenticationController.saveToken(loginResponse.token);
             authenticationController.saveUsername(loginResponse.username);
             authenticationController.saveEmail(loginResponse.email);
             authenticationController.isLogged.value = true;
@@ -91,13 +91,7 @@ class LoginController extends GetxController {
     } on DioError catch (e) {
       if (e.response?.statusCode == 401) {
         debugPrint("status code ${e.response?.statusCode}");
-        if (e.response?.data["errorCode"] == -1) {
-          Get.showSnackbar(snackBar("Invalid email"));
-          // Get.dialog(const LoginDialogAlert(errorMessage: 'Invalid email'));
-        } else if (e.response?.data["errorCode"] == -2) {
-          Get.showSnackbar(snackBar("Invalid password"));
-          // Get.dialog(const LoginDialogAlert(errorMessage: 'Invalid password'));
-        }
+        Get.showSnackbar(snackBar("Wrong credentials"));
       } else {
         Get.showSnackbar(snackBar("An error occured"));
       }
@@ -128,10 +122,10 @@ class LoginController extends GetxController {
           notificationToken: notificationToken);
       debugPrint('user token is ${verifyUserCommand.token}');
       Response response = await userWebServices.verifyEmail(verifyUserCommand);
-      if (response.statusCode == 200) {
+      if (response != null && response.statusCode == 200) {
         var loginResponse = LoginResponse.fromJson(response.data);
         if (loginResponse.token != null) {
-          authenticationController.login(loginResponse.token);
+          authenticationController.saveToken(loginResponse.token);
           authenticationController.saveUsername(loginResponse.username);
           authenticationController.saveEmail(loginResponse.email);
           authenticationController.isLogged.value = true;
@@ -144,19 +138,13 @@ class LoginController extends GetxController {
         }
       }
     } on DioError catch (e) {
-      if (e.response?.statusCode == 400) {
-        if (e.response?.data == "user not found") {
-          throw Exception("user not found");
-        } else if (e.response?.data == "device not found") {
-          throw Exception("device not found");
-        } else if (e.response?.data == "Invalid Token") {
-          Get.showSnackbar(snackBar("Invalid Token"));
-        } else {
-          Get.showSnackbar(snackBar("An error occured"));
-          throw Exception(e.error);
-        }
+      if (e.response?.statusCode == 400 || e.response?.statusCode == 401) {
+        debugPrint(e.toString());
+        Get.showSnackbar(snackBar("Invalid Token"));
+      } else {
+        debugPrint(e.toString());
+        Get.showSnackbar(snackBar("Something went wrong"));
       }
-      debugPrint(e.toString());
     } finally {
       verificationEmailIsLoading(false);
     }

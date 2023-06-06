@@ -3,6 +3,7 @@ import 'package:smart_car_mobile_app/presentation/screens/login_page.dart';
 import 'package:smart_car_mobile_app/presentation/screens/splash_screen.dart';
 import 'package:smart_car_mobile_app/presentation/screens/verification_page.dart';
 import 'package:smart_car_mobile_app/presentation/widgets/buttom_nav_bar.dart';
+import 'package:smart_car_mobile_app/presentation/widgets/settings/manage_access.dart';
 
 class AppPages {
   static final List<GetPage> pages = [
@@ -12,7 +13,8 @@ class AppPages {
       page: () => const LoginPage(),
     ),
     GetPage(name: AppRoutes.verificationScreen, page: () => VerificationPage()),
-    GetPage(name: AppRoutes.bottomNavBar, page: () => BottomNavBar())
+    GetPage(name: AppRoutes.bottomNavBar, page: () => BottomNavBar()),
+    GetPage(name: AppRoutes.manageAcessScreen, page: () =>  ManageAcessScreen())
   ];
 }
 
@@ -21,4 +23,5 @@ class AppRoutes {
   static const loginScreen = '/login_page';
   static const verificationScreen = '/verification_page';
   static const bottomNavBar = '/bottom_nav_bar';
+  static const manageAcessScreen = '/manage_access_page';
 }

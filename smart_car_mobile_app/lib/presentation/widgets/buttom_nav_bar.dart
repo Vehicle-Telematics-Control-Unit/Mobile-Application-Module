@@ -33,7 +33,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       MainScreen(),
       const NavScreen(),
       const NotificationScreen(),
-      const SettingsScreen(),
+       SettingsScreen(),
     ];
   }
 

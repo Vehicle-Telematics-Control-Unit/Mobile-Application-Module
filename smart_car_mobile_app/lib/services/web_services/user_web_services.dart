@@ -38,9 +38,8 @@ class UserWebServices extends GetConnect {
     }
   }
 
-
-
-  Future<dynamic> userLogin(String username, String password, String? notificationToken) async {
+  Future<dynamic> userLogin(
+      String username, String password, String? notificationToken) async {
     late String? deviceId;
     User user;
     try {
@@ -50,14 +49,58 @@ class UserWebServices extends GetConnect {
       debugPrint("error in ${e.toString()}");
     }
     try {
-      user = User(username: username, password: password, deviceId: deviceId,notificationToken: notificationToken);
-      
+      user = User(
+          username: username,
+          password: password,
+          deviceId: deviceId,
+          notificationToken: notificationToken);
+
       Response response =
           await dio.post(ApiEndPoints.loginUrl, data: user.toJson());
       await Future.delayed(const Duration(seconds: 2));
       return response;
-    } catch (e) {
-      rethrow;
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 401) {
+        debugPrint("status code ${e.response?.statusCode}");
+
+        Get.showSnackbar(snackBar("Wrong credentials!"));
+      } else {
+        Get.showSnackbar(snackBar("An error occured"));
+      }
     }
+  }
+
+  Future<dynamic> requestAccess(String? authToken, String? deviceId) async {
+    try {
+      dio.options.headers = {
+        'Authorization': 'Bearer $authToken',
+        'HasPrimaryDevice': 'yes',
+        'deviceId': deviceId
+      };
+      Response response = await dio.post(ApiEndPoints.requestAccess);
+      await Future.delayed(const Duration(seconds: 2));
+      return response;
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 401 ||
+          e.response?.statusCode == HttpStatus.forbidden) {
+        Get.showSnackbar(snackBar("Invalid!"));
+      } else {
+        Get.showSnackbar(snackBar("something went wrong!"));
+      }
+    }
+  }
+
+  GetSnackBar snackBar(String message) {
+    return GetSnackBar(
+      snackStyle: SnackStyle.GROUNDED,
+      message: message,
+      backgroundColor: Colors.grey.shade900,
+      icon: const Icon(CupertinoIcons.exclamationmark_circle,
+          color: Colors.red, size: 30),
+      duration: const Duration(seconds: 3),
+      snackPosition: SnackPosition.TOP,
+      borderRadius: 10,
+      shouldIconPulse: true,
+    );
   }
 }

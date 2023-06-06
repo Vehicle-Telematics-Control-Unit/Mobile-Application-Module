@@ -65,11 +65,13 @@ dependencies:
   json_annotation: ^4.8.0
   json_serializable: ^6.6.1
   line_icons: ^2.0.1
+  lottie: ^2.4.0
   page_transition: ^2.0.9
   percent_indicator: ^4.2.3
   permission_handler: ^10.2.0
   persistent_bottom_nav_bar: ^5.0.2
   platform_device_id: ^1.0.1
+  qr_flutter: ^3.2.0
   shared_preferences: ^2.1.1
   shimmer: ^3.0.0
   shimmer_animation: ^2.1.0+1
