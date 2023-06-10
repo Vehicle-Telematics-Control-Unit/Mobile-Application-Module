@@ -3,15 +3,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_offline/flutter_offline.dart';
 
-class OfflineWrapper extends StatefulWidget {
+class OfflineWrapper extends StatelessWidget {
   final Widget child;
   const OfflineWrapper({super.key, required this.child});
 
-  @override
-  State<OfflineWrapper> createState() => _OfflineWrapperState();
-}
-
-class _OfflineWrapperState extends State<OfflineWrapper> {
   @override
   Widget build(BuildContext context) {
     return OfflineBuilder(
@@ -35,9 +30,9 @@ class _OfflineWrapperState extends State<OfflineWrapper> {
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   color: Colors.grey[900],
-                  child: Center(
+                  child: const Center(
                     child: Row(
-                      children: const [
+                      children:  [
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Icon(
@@ -57,7 +52,7 @@ class _OfflineWrapperState extends State<OfflineWrapper> {
         }
         return child;
       },
-      child: widget.child,
+      child: child,
     );
   }
 }

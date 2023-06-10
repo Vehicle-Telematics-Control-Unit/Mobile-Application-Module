@@ -56,20 +56,22 @@ class _VerificationPageState extends State<VerificationPage> {
 
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(),
         body: Column(children: [
-          const SizedBox(
-            height: 70,
+          SizedBox(
+            height: screenHeight * 0.1,
           ),
           Text('Verification code',
               style:
                   GoogleFonts.lato(fontSize: 30, fontWeight: FontWeight.bold)),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: screenHeight * 0.01,
           ),
           Text(
             "code has sent to",
@@ -84,16 +86,16 @@ class _VerificationPageState extends State<VerificationPage> {
               fontSize: 15,
             ),
           ),
-          const SizedBox(
-            height: 100,
+          SizedBox(
+            height: screenHeight * 0.1,
           ),
           Form(
               child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SizedBox(
-                height: 68,
-                width: 64,
+                height: screenHeight * 0.1,
+                width: screenWidth * 0.18,
                 child: TextFormField(
                   controller: loginController.blockOneController,
                   onSaved: (value) => loginController.blockOneController,
@@ -121,8 +123,8 @@ class _VerificationPageState extends State<VerificationPage> {
                 ),
               ),
               SizedBox(
-                height: 68,
-                width: 64,
+                height: screenHeight * 0.1,
+                width: screenWidth * 0.18,
                 child: TextFormField(
                   controller: loginController.blockTwoController,
                   onSaved: (value) => loginController.blockTwoController,
@@ -150,8 +152,8 @@ class _VerificationPageState extends State<VerificationPage> {
                 ),
               ),
               SizedBox(
-                height: 68,
-                width: 64,
+                height: screenHeight * 0.1,
+                width: screenWidth * 0.18,
                 child: TextFormField(
                   controller: loginController.blockThreeController,
                   onSaved: (value) => loginController.blockThreeController,
@@ -179,8 +181,8 @@ class _VerificationPageState extends State<VerificationPage> {
                 ),
               ),
               SizedBox(
-                height: 68,
-                width: 64,
+                height: screenHeight * 0.1,
+                width: screenWidth * 0.18,
                 child: TextFormField(
                   controller: loginController.blockFourController,
                   onSaved: (value) => loginController.blockFourController,
@@ -207,12 +209,12 @@ class _VerificationPageState extends State<VerificationPage> {
               )
             ],
           )),
-          const SizedBox(
-            height: 40,
+          SizedBox(
+            height: screenHeight * 0.05,
           ),
           buildTimer(),
-          const SizedBox(
-            height: 30,
+          SizedBox(
+            height: screenHeight * 0.03,
           ),
           Padding(
             padding: const EdgeInsets.all(25.0),
@@ -221,7 +223,7 @@ class _VerificationPageState extends State<VerificationPage> {
               child: ElevatedButton(
                 onPressed: () {
                   widget.loginController.verifyMail();
-                  
+
                   setState(() {});
                   // if it is verified then
 

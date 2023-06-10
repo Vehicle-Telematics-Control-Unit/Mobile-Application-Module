@@ -15,7 +15,7 @@ class User {
   @JsonKey(name: "notificationToken")
   String? notificationToken;
 
-  User({this.username, this.password,this.deviceId,this.email,this.notificationToken});
+  User({this.username, this.password, this.email, this.notificationToken,this.deviceId});
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);

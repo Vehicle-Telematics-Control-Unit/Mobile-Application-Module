@@ -46,7 +46,7 @@ class _LoginButtonState extends State<LoginButton> {
                   color: Colors.grey[50],
                   size: 30,
                 )
-              : const Text('Log In ');
+              : const Text('Login ');
         }),
       ),
     );

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
-import 'package:smart_car_mobile_app/presentation/widgets/settings/manage_access.dart';
+
 import 'package:smart_car_mobile_app/presentation/widgets/settings/notifications_options.dart';
 import '../../controllers/share_access_controller.dart';
-import '../../utils/routes.dart';
+
 import '../widgets/settings/account_options.dart';
 import '../widgets/settings/sign_out_option.dart';
 
@@ -69,7 +69,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       interval: const Duration(
                           seconds: 0), //Default value: Duration(seconds: 0)
                       color: Colors.white, //Default value
-                      colorOpacity: 0.05, //Default value
+                      colorOpacity: 0, //Default value
                       enabled: true, //Default value
                       direction: const ShimmerDirection.fromLTRB(),
                       child: AccountOptions(

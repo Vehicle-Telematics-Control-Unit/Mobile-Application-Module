@@ -7,11 +7,13 @@ class BatteryIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
     return GestureDetector(
       child: Container(
         height: double.infinity,
         // height: 250,
-        width: 156,
+        width: screenWidth * 0.4,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: Colors.grey[900],
@@ -27,7 +29,8 @@ class BatteryIndicator extends StatelessWidget {
             Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 12.0, left: 18),
+                  padding: EdgeInsets.only(
+                      top: screenHeight * 0.02, left: screenHeight * 0.02),
                   child: Text(
                     'Battery',
                     style: GoogleFonts.lato(
@@ -40,7 +43,7 @@ class BatteryIndicator extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 23),
+              padding: EdgeInsets.only(top: screenHeight * 0.02),
               child: Center(
                 child: CircularPercentIndicator(
                   radius: 35,
@@ -62,9 +65,9 @@ class BatteryIndicator extends StatelessWidget {
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(top: 8.0),
-              child: Divider(
+            Padding(
+              padding: EdgeInsets.only(top: screenHeight * 0.01),
+              child: const Divider(
                 indent: 10,
                 thickness: 1.5,
                 endIndent: 10,
@@ -72,7 +75,7 @@ class BatteryIndicator extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 8.0),
+              padding: EdgeInsets.only(top: screenHeight * 0.01),
               child: Center(
                   child: Text('Remaining Battery',
                       style: GoogleFonts.lato(
@@ -89,7 +92,7 @@ class BatteryIndicator extends StatelessWidget {
                         fontStyle: FontStyle.normal,
                         color: const Color.fromRGBO(255, 255, 255, 0.6)))),
             Padding(
-                padding: const EdgeInsets.only(top: 8.0),
+                padding: EdgeInsets.only(top: screenHeight * 0.01),
                 child: Center(
                   child: RichText(
                       text: TextSpan(

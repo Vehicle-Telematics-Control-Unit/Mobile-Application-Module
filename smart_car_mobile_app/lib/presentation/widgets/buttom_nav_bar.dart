@@ -33,7 +33,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       MainScreen(),
       const NavScreen(),
       const NotificationScreen(),
-       SettingsScreen(),
+      SettingsScreen(),
     ];
   }
 
@@ -160,10 +160,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       stateManagement: true, // Default is true.
       hideNavigationBarWhenKeyboardShows:
           true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
-      decoration: NavBarDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        colorBehindNavBar: Colors.white,
-      ),
+
       popAllScreensOnTapOfSelectedTab: true,
       popActionScreens: PopActionScreensType.all,
       itemAnimationProperties: const ItemAnimationProperties(

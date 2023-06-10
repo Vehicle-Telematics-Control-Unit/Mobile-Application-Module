@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:get_storage/get_storage.dart';
 
 mixin CasheManagerService {
@@ -18,6 +18,17 @@ mixin CasheManagerService {
     final storage = GetStorage();
     await storage.write('email', email);
     return true;
+  }
+
+   Future<bool> saveDeviceId(String? deviceId) async {
+    final storage = GetStorage();
+    await storage.write('deviceId', deviceId);
+    return true;
+  }
+
+  String getDeviceId() {
+    final storage = GetStorage();
+    return storage.read('deviceId');
   }
 
   String getEmail() {

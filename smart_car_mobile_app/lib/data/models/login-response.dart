@@ -13,6 +13,7 @@ class LoginResponse {
   String? username;
   @JsonKey(name: "email")
   String? email;
+  
  
 
   LoginResponse({this.token, this.expiration, this.username, this.email});

@@ -16,11 +16,14 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
-
+    var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.only(top: 25, left: 20, right: 20),
+          padding: EdgeInsets.only(
+              top: screenHeight * 0.08,
+              left: screenHeight * 0.02,
+              right: screenHeight * 0.02),
           child: Column(children: [
             SizedBox(
               height: screenHeight * 0.03,
@@ -82,17 +85,20 @@ class MainScreen extends StatelessWidget {
                   height: screenHeight * 0.03,
                 ),
                 SizedBox(
-                  height: 250,
+                  height: screenHeight * 0.35,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const BatteryIndicator(),
+                      SizedBox(
+                        width: screenWidth * 0.03,
+                      ),
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          PressureIndicatorCard(),
-                          OilFuelIndicator(),
+                        children: [
+                          const PressureIndicatorCard(),
+                          SizedBox(
+                            height: screenHeight * 0.01,
+                          ),
+                          const OilFuelIndicator(),
                         ],
                       )
                     ],

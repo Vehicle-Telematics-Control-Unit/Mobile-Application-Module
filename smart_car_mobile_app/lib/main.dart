@@ -68,10 +68,7 @@ Future<void> main() async {
   Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-  runApp(DevicePreview(
-    enabled: true,
-    builder: (context) => VehiclePlus(),
-  ));
+  runApp(const VehiclePlus());
   HttpOverrides.global = MyHttpOverrides();
 }
 
@@ -86,7 +83,7 @@ class MyHttpOverrides extends HttpOverrides {
 
 // ignore: must_be_immutable
 class VehiclePlus extends StatefulWidget {
-  VehiclePlus({super.key});
+  const VehiclePlus({super.key});
 
   @override
   State<VehiclePlus> createState() => _VehiclePlusState();
@@ -108,16 +105,19 @@ class _VehiclePlusState extends State<VehiclePlus> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return OfflineWrapper(
-      child: GetMaterialApp(
-        //theme: FlexThemeData.light(scheme: FlexScheme.hippieBlue),
-        darkTheme: FlexThemeData.dark(scheme: FlexScheme.hippieBlue),
-        themeMode: ThemeMode.dark,
-        home: const SplashScreen(),
-        initialBinding: LoginBinding(),
-        // initialRoute: '/',
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: routeGenerator.generateRoute,
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: OfflineWrapper(
+        child: GetMaterialApp(
+          //theme: FlexThemeData.light(scheme: FlexScheme.hippieBlue),
+          darkTheme: FlexThemeData.dark(scheme: FlexScheme.hippieBlue),
+          themeMode: ThemeMode.dark,
+          home: const SplashScreen(),
+          initialBinding: LoginBinding(),
+          // initialRoute: '/',
+          debugShowCheckedModeBanner: false,
+          onGenerateRoute: routeGenerator.generateRoute,
+        ),
       ),
     );
   }

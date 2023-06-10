@@ -9,11 +9,13 @@ class PressureIndicatorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
     return GestureDetector(
         child: Container(
       // height: double.infinity,
-      height: 60,
-      width: 156,
+      height: screenHeight * 0.08,
+      width: screenWidth * 0.47,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: Colors.grey[900],
@@ -36,7 +38,7 @@ class PressureIndicatorCard extends StatelessWidget {
           IconButton(
               onPressed: () {
                 Get.to(
-                  () =>  const TyrePressureScreen(),
+                  () => const TyrePressureScreen(),
                   transition: Transition.downToUp,
                   duration: const Duration(milliseconds: 400),
                 );

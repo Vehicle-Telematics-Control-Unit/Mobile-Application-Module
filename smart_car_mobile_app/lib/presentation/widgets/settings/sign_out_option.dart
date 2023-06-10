@@ -34,14 +34,14 @@ class _SignOutOptionState extends State<SignOutOption> {
       TextButton(
           onPressed: () {
             loginController.logout();
-            Get.offAll(() => const LoginPage());
+            Get.offAll(() =>   const LoginPage());
             loginController.usernameController.text = '';
             loginController.passwordController.text = '';
             setState(() {});
             // Get.offAll(() => LoginPage());
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const LoginPage()),
+              MaterialPageRoute(builder: (context) =>   const LoginPage()),
             );
           },
           child: Align(

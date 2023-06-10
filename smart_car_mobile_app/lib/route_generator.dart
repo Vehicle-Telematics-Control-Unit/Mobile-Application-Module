@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:smart_car_mobile_app/presentation/screens/qr_scanner_screen.dart';
+import 'package:smart_car_mobile_app/presentation/widgets/settings/access_denied.dart';
 import 'package:smart_car_mobile_app/presentation/widgets/settings/manage_access.dart';
 import 'package:smart_car_mobile_app/services/web_services/user_web_services.dart';
 import 'package:smart_car_mobile_app/presentation/screens/login_page.dart';
@@ -18,7 +20,7 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const SplashScreen());
       case '/login_page':
         return MaterialPageRoute(
-          builder: (_) => const LoginPage(),
+          builder: (_) =>  const LoginPage(),
         );
 
       case '/verification_page':
@@ -27,6 +29,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>  BottomNavBar());
       case '/manage_access_page':
         return  MaterialPageRoute(builder: (_) =>   ManageAcessScreen());
+      case '/access_denied':
+        return  MaterialPageRoute(builder: (_) =>   const AccessDenied());
+      case '/qr_scanner_screen':
+        return  MaterialPageRoute(builder: (_) =>    QrScannerScreen());
     }
     return null;
   }

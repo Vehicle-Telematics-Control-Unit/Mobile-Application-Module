@@ -4,7 +4,9 @@ import 'package:platform_device_id/platform_device_id.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:smart_car_mobile_app/data/models/submit-access-model.dart';
 import 'package:smart_car_mobile_app/data/models/verify-user-command.dart';
+import '../../presentation/widgets/settings/access_denied.dart';
 import '../../utils/api_endpoints.dart';
 
 import '../../data/models/user.dart';
@@ -16,8 +18,8 @@ class UserWebServices extends GetConnect {
     BaseOptions options = BaseOptions(
       baseUrl: ApiEndPoints.baseUrl,
       receiveDataWhenStatusError: true,
-      connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 30),
+      connectTimeout: const Duration(seconds: 45),
+      receiveTimeout: const Duration(seconds: 45),
       headers: {
         HttpHeaders.acceptCharsetHeader: 'utf-8',
       },
@@ -40,8 +42,9 @@ class UserWebServices extends GetConnect {
 
   Future<dynamic> userLogin(
       String username, String password, String? notificationToken) async {
-    late String? deviceId;
     User user;
+    late String? deviceId;
+
     try {
       deviceId = await PlatformDeviceId.getDeviceId;
       debugPrint("device id is $deviceId");
@@ -59,7 +62,8 @@ class UserWebServices extends GetConnect {
           await dio.post(ApiEndPoints.loginUrl, data: user.toJson());
       await Future.delayed(const Duration(seconds: 2));
       return response;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
+      debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
       if (e.response?.statusCode == 401) {
         debugPrint("status code ${e.response?.statusCode}");
 
@@ -80,12 +84,19 @@ class UserWebServices extends GetConnect {
       Response response = await dio.post(ApiEndPoints.requestAccess);
       await Future.delayed(const Duration(seconds: 2));
       return response;
-    } on DioError catch (e) {
-      if (e.response?.statusCode == 401 ||
-          e.response?.statusCode == HttpStatus.forbidden) {
-        Get.showSnackbar(snackBar("Invalid!"));
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401 || e.response?.statusCode == 403) {
+        Get.to(
+          () => const AccessDenied(),
+          transition: Transition.downToUp,
+          duration: const Duration(milliseconds: 400),
+        );
       } else {
-        Get.showSnackbar(snackBar("something went wrong!"));
+        Get.to(
+          () => const AccessDenied(),
+          transition: Transition.downToUp,
+          duration: const Duration(milliseconds: 400),
+        );
       }
     }
   }
@@ -102,5 +113,27 @@ class UserWebServices extends GetConnect {
       borderRadius: 10,
       shouldIconPulse: true,
     );
+  }
+
+  Future<dynamic> submitRequestAccess(
+      SubmitAccessModel submitAccessModel) async {
+    try {
+      Response response = await dio.post(ApiEndPoints.submitAccess,
+          data: submitAccessModel.toJson());
+      await Future.delayed(const Duration(seconds: 2));
+      return response;
+    } on DioException catch (e) {
+      debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
+
+      // if (e.response?.statusCode == 500) {
+      //   debugPrint("status code ${e.response?.statusCode}");
+
+      //   Get.showSnackbar(snackBar("An error occured!"));
+      // } else if (e.response?.statusCode == 419) {
+      //   Get.showSnackbar(snackBar("request expired"));
+      // } else {
+      //   Get.showSnackbar(snackBar("Access Denied!"));
+      // }
+    }
   }
 }

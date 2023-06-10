@@ -11,7 +11,8 @@ VerifyUserCommand _$VerifyUserCommandFromJson(Map<String, dynamic> json) =>
       userEmail: json['userEmail'] as String?,
       token: json['token'] as String?,
       deviceId: json['deviceId'] as String?,
-    )..notificationToken = json['notificationToken'] as String?;
+      notificationToken: json['notificationToken'] as String?,
+    );
 
 Map<String, dynamic> _$VerifyUserCommandToJson(VerifyUserCommand instance) =>
     <String, dynamic>{

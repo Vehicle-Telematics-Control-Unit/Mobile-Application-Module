@@ -73,6 +73,7 @@ class LoginController extends GetxController {
         // 200
         if (response.data['message'] == "otp code sent") {
           authenticationController.saveEmail(response.data['email']);
+          authenticationController.saveDeviceId(response.data['deviceId']);
           Get.toNamed(AppRoutes.verificationScreen);
         } else {
           var loginResponse = LoginResponse.fromJson(response.data);
@@ -80,6 +81,7 @@ class LoginController extends GetxController {
             authenticationController.saveToken(loginResponse.token);
             authenticationController.saveUsername(loginResponse.username);
             authenticationController.saveEmail(loginResponse.email);
+
             authenticationController.isLogged.value = true;
             usernameController.clear();
             passwordController.clear();
@@ -88,7 +90,8 @@ class LoginController extends GetxController {
           }
         }
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
+      debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
       if (e.response?.statusCode == 401) {
         debugPrint("status code ${e.response?.statusCode}");
         Get.showSnackbar(snackBar("Wrong credentials"));
@@ -110,13 +113,13 @@ class LoginController extends GetxController {
           await NotificationHandler.registerOnFirebase(firebaseMessaging);
 
       debugPrint("notificationToken is $notificationToken");
-      String? deviceId = await PlatformDeviceId.getDeviceId;
+      // String? deviceId = await PlatformDeviceId.getDeviceId;
       String? otpCode = blockOneController.text +
           blockTwoController.text +
           blockThreeController.text +
           blockFourController.text;
       VerifyUserCommand verifyUserCommand = VerifyUserCommand(
-          deviceId: deviceId,
+          deviceId: await PlatformDeviceId.getDeviceId,
           userEmail: authenticationController.getEmail(),
           token: otpCode,
           notificationToken: notificationToken);
@@ -137,13 +140,15 @@ class LoginController extends GetxController {
           blockFourController.text = '';
         }
       }
-    } on DioError catch (e) {
-      if (e.response?.statusCode == 400 || e.response?.statusCode == 401) {
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 400 ||
+          e.response?.statusCode == 401 ||
+          e.response?.statusCode == 419) {
         debugPrint(e.toString());
         Get.showSnackbar(snackBar("Invalid Token"));
       } else {
         debugPrint(e.toString());
-        Get.showSnackbar(snackBar("Something went wrong"));
+        Get.showSnackbar(snackBar("Something went wrong!"));
       }
     } finally {
       verificationEmailIsLoading(false);
