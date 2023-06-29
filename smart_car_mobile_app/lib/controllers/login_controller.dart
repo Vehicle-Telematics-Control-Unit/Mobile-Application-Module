@@ -81,7 +81,7 @@ class LoginController extends GetxController {
             authenticationController.saveToken(loginResponse.token);
             authenticationController.saveUsername(loginResponse.username);
             authenticationController.saveEmail(loginResponse.email);
-
+            authenticationController.saveLoginStatus(true);
             authenticationController.isLogged.value = true;
             usernameController.clear();
             passwordController.clear();
@@ -131,6 +131,9 @@ class LoginController extends GetxController {
           authenticationController.saveToken(loginResponse.token);
           authenticationController.saveUsername(loginResponse.username);
           authenticationController.saveEmail(loginResponse.email);
+          authenticationController.saveLoginStatus(true);
+          debugPrint(
+              "is logged in controller:  ${authenticationController.getLoginStatus()}");
           authenticationController.isLogged.value = true;
           debugPrint('saved token is ${authenticationController.getToken()}');
           Get.toNamed(AppRoutes.bottomNavBar); // Nav Button
@@ -173,6 +176,7 @@ class LoginController extends GetxController {
     authenticationController.logOut();
     authenticationController.removeUsername();
     authenticationController.removeEmail();
+    
   }
 
   String? validatePassword(String? value) {

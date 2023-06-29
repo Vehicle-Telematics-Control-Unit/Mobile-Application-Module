@@ -10,10 +10,15 @@ class OnBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("iam on board");
     AuthenticationController authenticationController =
         Get.find<AuthenticationController>();
-    return Obx(() => authenticationController.isLogged.value
-        ? BottomNavBar()
-        : const LoginPage());
+    var isLoggedIn = authenticationController.getLoginStatus();
+    debugPrint("is logged:  $isLoggedIn");
+    if (isLoggedIn == true) {
+      return BottomNavBar();
+    } else {
+      return const LoginPage();
+    }
   }
 }

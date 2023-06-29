@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/models/notification_model.dart';
@@ -99,7 +100,7 @@ class NotificationController extends GetxController {
     prefs.setStringList('notifications', notificationsStringList);
 
     unreadCount.value++;
-    // debugPrint("valuee is ${unreadCount.value.toString()}");
+    debugPrint("valuee is ${unreadCount.value.toString()}");
   }
 
   dynamic updateReadNotificationCount() {

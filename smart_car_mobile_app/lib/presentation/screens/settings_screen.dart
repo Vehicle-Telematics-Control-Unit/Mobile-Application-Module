@@ -25,21 +25,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+        title: Padding(
+          padding: EdgeInsets.only(
+            top: screenHeight * 0.03,
+          ),
+          child: Text(
+            "Settings",
+            style: GoogleFonts.lato(
+                fontSize: 28,
+                letterSpacing: 0.01,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.only(
-              left: screenWidth * 0.08,
-              top: screenHeight * 0.08,
-              right: screenWidth * 0.08),
+              left: screenHeight * 0.02,
+              top: screenHeight * 0.03,
+              right: screenHeight * 0.02),
           child: ListView(children: [
-            Text(
-              "Settings",
-              style: GoogleFonts.lato(
-                  fontSize: 28,
-                  letterSpacing: 0.01,
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.bold),
-            ),
             SizedBox(
               height: screenHeight * 0.08,
             ),

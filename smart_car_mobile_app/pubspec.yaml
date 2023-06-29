@@ -21,7 +21,7 @@ version: 1.0.0+1
 
 environment:
   sdk: '>=2.19.2 <3.0.0'
-
+  
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
 # consider running `flutter pub upgrade --major-versions`. Alternatively,
@@ -59,16 +59,17 @@ dependencies:
   get: ^4.6.5
   get_storage: ^2.0.3
   google_fonts: ^4.0.0
-  google_maps_flutter: ^2.2.5
+  google_maps_flutter: ^2.3.1
   intl: ">=0.17.0 <0.19.0"
   json_annotation: ^4.8.1
   json_serializable: ^6.6.1
   line_icons: ^2.0.1
   lottie: ^2.4.0
-  mobile_scanner: ^3.2.0
+  mobile_scanner: ^3.0.0-beta.4
+  signalr_core: ^1.1.1 
   page_transition: ^2.0.9
   percent_indicator: ^4.2.3
-  permission_handler: ^10.2.0
+  permission_handler: ^10.3.0
   persistent_bottom_nav_bar: ^5.0.2
   platform_device_id: ^1.0.1
   qr_code_scanner: ^1.0.1
@@ -76,8 +77,9 @@ dependencies:
   shared_preferences: ^2.1.1
   shimmer: ^3.0.0
   shimmer_animation: ^2.1.0+1
+  signalr_netcore: ^0.1.7+2-nullsafety.3
   toast: ^0.3.0
-
+  web_socket_channel: ^2.4.0
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
@@ -107,6 +109,7 @@ flutter:
     - assets/images/101930-no-acces-denied.json
     - assets/13865-sign-for-error-flat-style.json
     - assets/92615-forgot-password-password-reset.json
+    - assets/map_styles.json
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

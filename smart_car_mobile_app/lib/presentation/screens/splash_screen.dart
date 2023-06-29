@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return splashView(screenWidth, screenHight);
           } else {
-            authenticationController.logOut();
+            // authenticationController.logOut();
             return const OnBoard();
           }
         });

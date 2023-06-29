@@ -78,8 +78,7 @@ class UserWebServices extends GetConnect {
     try {
       dio.options.headers = {
         'Authorization': 'Bearer $authToken',
-        'HasPrimaryDevice': 'yes',
-        'deviceId': deviceId
+      
       };
       Response response = await dio.post(ApiEndPoints.requestAccess);
       await Future.delayed(const Duration(seconds: 2));

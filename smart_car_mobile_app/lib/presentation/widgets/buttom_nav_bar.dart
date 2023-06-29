@@ -68,11 +68,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
           },
         ),
         inactiveIcon: Obx(() {
-          return notificationController.unreadCount > 0
+          debugPrint(
+              'unread messagres are :${notificationController.unreadCount.value.toString()}');
+          return notificationController.unreadCount.value > 0
               ? badges.Badge(
                   stackFit: StackFit.passthrough,
                   badgeContent:
-                      Text(notificationController.unreadCount.toString()),
+                      Text(notificationController.unreadCount.value.toString()),
                   child: const Icon(Icons.notifications_outlined, shadows: [
                     Shadow(color: Colors.white70, blurRadius: 15.0)
                   ]))
@@ -123,7 +125,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   void initState() {
     super.initState();
-
+    debugPrint("all herrrre");
+    
     // final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
     // NotificationHandler.registerOnFirebase(firebaseMessaging);
 
@@ -133,6 +136,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
       final notificationController = Get.find<NotificationController>();
       notificationController.addNotification(
           message.notification?.title ?? "", message.notification?.body ?? "");
+
       debugPrint(
           ' from foreground Title: ${message.notification?.title ?? ""}, Message: ${message.notification?.body ?? ""}');
     });

@@ -2,6 +2,9 @@
     package="com.example.smart_car_mobile_app">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
    <application
         android:label="smart_car_mobile_app"
         android:name="${applicationName}"
@@ -37,7 +40,7 @@
             android:name="flutterEmbedding"
             android:value="2" />
          <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyC4BJn349fKc-WhkKwiouYOE8yDuGUG8zg"/>
+               android:value="AIzaSyByLE8-dktIxlwBZbxJNLaduzdLtGR_E2c"/>
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />

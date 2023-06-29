@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_car_mobile_app/presentation/widgets/main_page/battery_indicator.dart';
-import 'package:smart_car_mobile_app/presentation/widgets/main_page/oil_fuel_indicator.dart';
 import 'package:smart_car_mobile_app/presentation/widgets/main_page/pressure_indicator_card.dart';
 import '../../controllers/authentication_controller.dart';
+import '../widgets/main_page/car_status.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({super.key});
@@ -18,27 +18,31 @@ class MainScreen extends StatelessWidget {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+        title: Padding(
+          padding: EdgeInsets.only(
+            top: screenHeight * 0.03,
+          ),
+          child: Text(
+            'Hello, ${authenticationController.getUserName()} !',
+            style: GoogleFonts.lato(
+                fontSize: 28,
+                letterSpacing: 0.01,
+                fontStyle: FontStyle.normal,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.only(
-              top: screenHeight * 0.08,
+              top: screenHeight * 0.03,
               left: screenHeight * 0.02,
               right: screenHeight * 0.02),
           child: Column(children: [
-            SizedBox(
-              height: screenHeight * 0.03,
-            ),
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Hello, ${authenticationController.getUserName()} !',
-                  style: GoogleFonts.lato(
-                      fontSize: 25,
-                      letterSpacing: 0.01,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.bold),
-                ),
                 // const CircleAvatar(
                 //   backgroundColor: Color.fromARGB(255, 192, 190, 190),
                 //   radius: 25,
@@ -98,7 +102,7 @@ class MainScreen extends StatelessWidget {
                           SizedBox(
                             height: screenHeight * 0.01,
                           ),
-                          const OilFuelIndicator(),
+                          const CarStatus(),
                         ],
                       )
                     ],

@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile_scanner/src/mobile_scanner_controller.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:smart_car_mobile_app/data/models/submit-access-model.dart';
@@ -63,7 +64,11 @@ class ShareAccessController extends GetxController {
     }
   }
 
-  Future<void> submitRequestAccess(String token, String tcuId) async {
+  Future<bool> submitRequestAccess(
+    String token,
+    String tcuId,
+  
+  ) async {
     submitAccessIsLoading(true);
     late String? deviceId;
 
@@ -87,6 +92,7 @@ class ShareAccessController extends GetxController {
               tcuId: tcuId,
               notificationToken: notificationToken));
       if (response != null && response.statusCode == 200) {
+        
         debugPrint('finalllyyyyyyyy');
         var loginResponse = LoginResponse.fromJson(response.data);
         if (loginResponse.token != null) {
@@ -95,11 +101,15 @@ class ShareAccessController extends GetxController {
           authenticationController.saveEmail(loginResponse.email);
           authenticationController.isLogged.value = true;
           debugPrint('saved token is ${authenticationController.getToken()}');
+          debugPrint('not token is ${notificationToken}');
           Get.offAll(BottomNavBar()); // Nav Button
+          return true;
         }
       }
+      return false;
     } catch (e) {
       debugPrint(e.toString());
+      return false;
     } finally {
       submitAccessIsLoading(false);
     }

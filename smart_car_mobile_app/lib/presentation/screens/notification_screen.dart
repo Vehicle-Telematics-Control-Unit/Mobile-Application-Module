@@ -17,7 +17,7 @@ class _NotificationScreenState extends State<NotificationScreen>
     with WidgetsBindingObserver {
   late int newNotificationCount;
   final NotificationController notificationController =
-      Get.put(NotificationController());
+      Get.find<NotificationController>();
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) async {
@@ -78,7 +78,7 @@ class _NotificationScreenState extends State<NotificationScreen>
         appBar: AppBar(
           title: Padding(
             padding: EdgeInsets.only(
-              top: screenHeight * 0.02,
+              top: screenHeight * 0.03,
             ),
             child: Text(
               'Notifications',
@@ -92,7 +92,7 @@ class _NotificationScreenState extends State<NotificationScreen>
         ),
         body: Obx(() {
           return Padding(
-            padding: const EdgeInsets.only(top: 20),
+            padding: EdgeInsets.only(top: screenHeight * 0.03),
             child: Scrollbar(
               thickness: 4.0,
               child: ListView.separated(

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+
 import 'package:qr_code_scanner/qr_code_scanner.dart ' as qr_scanner;
 import 'package:smart_car_mobile_app/controllers/share_access_controller.dart';
 
@@ -17,7 +18,8 @@ class QrScannerScreen extends StatefulWidget {
 }
 
 class _QrScannerScreenState extends State<QrScannerScreen> {
-  MobileScannerController cameraController = MobileScannerController();
+  MobileScannerController cameraController =
+      MobileScannerController(detectionSpeed: DetectionSpeed.noDuplicates);
 
   var isLoading = false;
   @override
@@ -78,20 +80,28 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
               height: MediaQuery.of(context).size.width,
               child: MobileScanner(
                 // fit: BoxFit.contain,
+
+                startDelay: true,
                 controller: cameraController,
                 onDetect: (capture) {
+                  debugPrint("handleBarcodeDetection");
                   handleBarcodeDetection(capture);
                 },
               ),
             ),
           ),
-          Stack(children: [
-            Visibility(
-              visible: isLoading,
-              child:
-                  const CircularProgressIndicator(), // Customize the progress indicator as needed
+          Positioned.fill(
+            child: Container(
+              decoration: ShapeDecoration(
+                shape: qr_scanner.QrScannerOverlayShape(
+                  borderColor: Colors.red,
+                  borderRadius: 10,
+                  borderLength: 20,
+                  borderWidth: 5,
+                ),
+              ),
             ),
-          ]),
+          ),
           Align(
             alignment: Alignment.topCenter,
             child: Padding(
@@ -112,8 +122,9 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
     );
   }
 
-  void handleBarcodeDetection(BarcodeCapture capture) {
+  Future<void> handleBarcodeDetection(BarcodeCapture capture) async {
     final List<Barcode> barcodes = capture.barcodes;
+    bool qrCodeDetected = false;
     for (final barcode in barcodes) {
       final String? rawData = barcode.rawValue;
       if (rawData != null) {
@@ -141,7 +152,7 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
                 encrypter.decrypt(encryptedTcuId, iv: iv);
             debugPrint('Decoded Token: $decryptedToken');
             debugPrint('Decoded TCU ID: $decryptedTcuId');
-            widget.shareAccessController
+            bool isValid = await widget.shareAccessController
                 .submitRequestAccess(decryptedToken, decryptedTcuId);
           }
           // Make HTTP request to verify qrcode

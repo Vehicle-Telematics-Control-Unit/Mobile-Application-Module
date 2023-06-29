@@ -19,6 +19,15 @@ mixin CasheManagerService {
     await storage.write('email', email);
     return true;
   }
+  Future<bool> saveLoginStatus(bool? status) async {
+    final storage = GetStorage();
+    await storage.write('isLoggedIn', status);
+    return true;
+  }
+  bool getLoginStatus() {
+    final storage = GetStorage();
+    return storage.read('isLoggedIn');
+  }
 
    Future<bool> saveDeviceId(String? deviceId) async {
     final storage = GetStorage();

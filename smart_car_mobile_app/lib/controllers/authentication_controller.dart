@@ -6,6 +6,7 @@ class AuthenticationController extends GetxController with CasheManagerService {
 
   void logOut() {
     isLogged.value = false;
+    saveLoginStatus(false);
     // removeToken();
   }
 
