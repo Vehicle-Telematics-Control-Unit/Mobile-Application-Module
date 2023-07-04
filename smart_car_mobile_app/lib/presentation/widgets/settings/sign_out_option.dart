@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_car_mobile_app/controllers/login_controller.dart';
 import 'package:smart_car_mobile_app/presentation/screens/login_page.dart';
 
+import '../../../bindings/login_bindings/login_bindings.dart';
 import '../../../controllers/authentication_controller.dart';
 
 class SignOutOption extends StatefulWidget {
@@ -23,6 +24,10 @@ class _SignOutOptionState extends State<SignOutOption> {
   final AuthenticationController authenticationController =
       Get.find<AuthenticationController>();
   final LoginController loginController = Get.find<LoginController>();
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +39,13 @@ class _SignOutOptionState extends State<SignOutOption> {
       TextButton(
           onPressed: () {
             loginController.logout();
-            Get.offAll(() =>   const LoginPage());
+            // Get.offAll(() => const LoginPage());
             loginController.usernameController.text = '';
             loginController.passwordController.text = '';
             setState(() {});
-            // Get.offAll(() => LoginPage());
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) =>   const LoginPage()),
-            );
+            // Navigator.pushNamedAndRemoveUntil(
+            //     context, '/login_page', (route) => false);
+            Get.offAll(const LoginPage(), binding: LoginBinding());
           },
           child: Align(
             alignment: Alignment.centerLeft,

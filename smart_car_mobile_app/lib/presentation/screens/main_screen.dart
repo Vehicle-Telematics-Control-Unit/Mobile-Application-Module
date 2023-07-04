@@ -6,12 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_car_mobile_app/presentation/widgets/main_page/battery_indicator.dart';
 import 'package:smart_car_mobile_app/presentation/widgets/main_page/pressure_indicator_card.dart';
 import '../../controllers/authentication_controller.dart';
+import '../../controllers/login_controller.dart';
 import '../widgets/main_page/car_status.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({super.key});
   AuthenticationController authenticationController =
       Get.find<AuthenticationController>();
+  LoginController loginController = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +25,18 @@ class MainScreen extends StatelessWidget {
           padding: EdgeInsets.only(
             top: screenHeight * 0.03,
           ),
-          child: Text(
-            'Hello, ${authenticationController.getUserName()} !',
-            style: GoogleFonts.lato(
+          child: Obx(() {
+            debugPrint('Username value: ${loginController.username.value}');
+            return Text(
+              'Hello, ${loginController.username.value}!',
+              style: GoogleFonts.lato(
                 fontSize: 28,
                 letterSpacing: 0.01,
                 fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.bold),
-          ),
+                fontWeight: FontWeight.bold,
+              ),
+            );
+          }),
         ),
       ),
       body: SafeArea(

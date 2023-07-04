@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:smart_car_mobile_app/data/models/change-password-model.dart';
 import 'package:smart_car_mobile_app/data/models/submit-access-model.dart';
 import 'package:smart_car_mobile_app/data/models/verify-user-command.dart';
 import '../../presentation/widgets/settings/access_denied.dart';
@@ -74,11 +76,26 @@ class UserWebServices extends GetConnect {
     }
   }
 
+  Future<bool> wakeUpTCU(var authToken) async {
+    try {
+      dio.options.headers = {
+        'Authorization': 'Bearer $authToken',
+      };
+      Response response = await dio.post(ApiEndPoints.wakeUpTCU);
+      await Future.delayed(const Duration(seconds: 2));
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } on DioException catch (e) {
+      debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
+    }
+    return false;
+  }
+
   Future<dynamic> requestAccess(String? authToken, String? deviceId) async {
     try {
       dio.options.headers = {
         'Authorization': 'Bearer $authToken',
-      
       };
       Response response = await dio.post(ApiEndPoints.requestAccess);
       await Future.delayed(const Duration(seconds: 2));
@@ -133,6 +150,57 @@ class UserWebServices extends GetConnect {
       // } else {
       //   Get.showSnackbar(snackBar("Access Denied!"));
       // }
+    }
+  }
+
+  Future<dynamic> changePassword(
+      String currentPassword, String newPassword, String authToken) async {
+    dio.options.headers = {
+      'Authorization': 'Bearer $authToken',
+    };
+    try {
+      var changePasswordModel = ChangePasswordModel(
+          password: currentPassword, newPassword: newPassword);
+
+      Response response = await dio.post(ApiEndPoints.changePassword,
+          data: changePasswordModel);
+      return response;
+    } on DioException catch (e) {
+      debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
+      if (e.response?.statusCode == HttpStatus.unauthorized) {
+        debugPrint("status code ${e.response?.statusCode}");
+
+        Get.showSnackbar(
+            snackBar("You are not Authorized to change password!"));
+      } else if (e.response?.statusCode == HttpStatus.badRequest) {
+        Get.showSnackbar(snackBar("Wrong Password!"));
+      } else {
+        Get.showSnackbar(snackBar("An error occured"));
+      }
+    }
+  }
+
+  Future<dynamic> changeUsername(String username, String authToken) async {
+    dio.options.headers = {
+      'Authorization': 'Bearer $authToken',
+    };
+    try {
+      debugPrint("usernameeeeeeee $username");
+      Response response = await dio.post(ApiEndPoints.changeUsername,
+          data: jsonEncode(username));
+      return response;
+    } on DioException catch (e) {
+      debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
+      if (e.response?.statusCode == HttpStatus.unauthorized) {
+        debugPrint("status code ${e.response?.statusCode}");
+
+        Get.showSnackbar(
+            snackBar("You are not Authorized to change username!"));
+      } else if (e.response?.statusCode == HttpStatus.badRequest) {
+        Get.showSnackbar(snackBar("Username already taken!"));
+      } else {
+        Get.showSnackbar(snackBar("An error occured"));
+      }
     }
   }
 }

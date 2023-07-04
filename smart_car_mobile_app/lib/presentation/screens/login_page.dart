@@ -18,12 +18,13 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final loginController = Get.put(LoginController());
+  final loginController = Get.find<LoginController>();
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   final RxBool btnActive = false.obs;
 
   @override
   void dispose() {
+    loginController.clearField();
     super.dispose();
   }
 
@@ -81,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                           TextButton(
                               onPressed: () {
                                 Get.to(
-                                  () =>  QrScannerScreen(),
+                                  () => QrScannerScreen(),
                                   transition: Transition.downToUp,
                                   duration: const Duration(milliseconds: 400),
                                 );

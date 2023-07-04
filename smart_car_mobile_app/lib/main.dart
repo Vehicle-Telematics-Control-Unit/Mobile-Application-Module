@@ -19,20 +19,20 @@ import 'data/models/notification_model.dart';
 Future<void> firebaseMessagingBackgroundHandler(
   RemoteMessage message,
 ) async {
-  // Initialize the FlutterLocalNotificationsPlugin
-  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  // Create a new AndroidNotificationChannel
-  const androidNotificationChannel = AndroidNotificationChannel(
-    'default_channel_id',
-    'Default Channel',
-    importance: Importance.max,
-  );
+  // // Initialize the FlutterLocalNotificationsPlugin
+  // final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  // // Create a new AndroidNotificationChannel
+  // const androidNotificationChannel = AndroidNotificationChannel(
+  //   'default_channel_id',
+  //   'Default Channel',
+  //   importance: Importance.max,
+  // );
 
-  // Register the AndroidNotificationChannel with the FlutterLocalNotificationsPlugin
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(androidNotificationChannel);
+  // // Register the AndroidNotificationChannel with the FlutterLocalNotificationsPlugin
+  // await flutterLocalNotificationsPlugin
+  //     .resolvePlatformSpecificImplementation<
+  //         AndroidFlutterLocalNotificationsPlugin>()
+  //     ?.createNotificationChannel(androidNotificationChannel);
 
   debugPrint("Handling a background message: ${message.messageId}");
 
@@ -114,7 +114,7 @@ class _VehiclePlusState extends State<VehiclePlus> {
           themeMode: ThemeMode.dark,
           home: const SplashScreen(),
           initialBinding: LoginBinding(),
-          // initialRoute: '/',
+
           debugShowCheckedModeBanner: false,
           onGenerateRoute: routeGenerator.generateRoute,
         ),

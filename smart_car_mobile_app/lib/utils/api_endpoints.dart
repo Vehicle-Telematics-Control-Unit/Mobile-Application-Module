@@ -6,4 +6,7 @@ class ApiEndPoints {
       '/authentication/mobile/shareAccess/request';
   static const String submitAccess =
       '/authentication/mobile/shareAccess/submit';
+  static const String wakeUpTCU = '/alerts';
+  static const String changePassword = '/authentication/mobile/editPassword';
+  static const String changeUsername = '/authentication/mobile/editUsername';
 }

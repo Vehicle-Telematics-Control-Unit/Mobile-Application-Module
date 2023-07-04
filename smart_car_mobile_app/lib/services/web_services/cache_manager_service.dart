@@ -24,7 +24,7 @@ mixin CasheManagerService {
     await storage.write('isLoggedIn', status);
     return true;
   }
-  bool getLoginStatus() {
+  bool? getLoginStatus() {
     final storage = GetStorage();
     return storage.read('isLoggedIn');
   }

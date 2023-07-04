@@ -31,6 +31,10 @@ class ShareAccessController extends GetxController {
     userWebServices = Get.find<UserWebServices>();
     super.onInit();
   }
+    @override
+  void dispose(){
+    super.dispose();
+  }
 
   Future<void> requestAccess() async {
     isLoading(true);

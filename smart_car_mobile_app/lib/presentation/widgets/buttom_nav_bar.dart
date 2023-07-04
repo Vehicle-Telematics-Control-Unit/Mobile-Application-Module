@@ -28,6 +28,7 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+  static int semaphore = 0;
   List<Widget> _buildScreens() {
     return [
       MainScreen(),
@@ -123,16 +124,27 @@ class _BottomNavBarState extends State<BottomNavBar> {
   // }
 
   @override
+  void dispose() {
+    super.dispose();
+    debugPrint("is deleted");
+  }
+
+  @override
   void initState() {
     super.initState();
     debugPrint("all herrrre");
-    
+
     // final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
     // NotificationHandler.registerOnFirebase(firebaseMessaging);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (semaphore != 0) {
+        return;
+      }
+      semaphore = 1;
+      Future.delayed(const Duration(seconds: 1)).then((_) => semaphore = 0);
       // NotificationManager().notifications.insert(0, message);
-
+      debugPrint("list to notifications");
       final notificationController = Get.find<NotificationController>();
       notificationController.addNotification(
           message.notification?.title ?? "", message.notification?.body ?? "");

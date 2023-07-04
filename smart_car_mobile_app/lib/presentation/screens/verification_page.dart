@@ -21,7 +21,7 @@ class _VerificationPageState extends State<VerificationPage> {
   late FocusNode secondPinFocusNode;
   late FocusNode thirdPinFocusNode;
   late FocusNode fourthPinFocusNode;
-  
+
   @override
   void initState() {
     secondPinFocusNode = FocusNode();
@@ -45,6 +45,7 @@ class _VerificationPageState extends State<VerificationPage> {
     secondPinFocusNode.dispose();
     thirdPinFocusNode.dispose();
     fourthPinFocusNode.dispose();
+    widget.loginController.clearVerifField();
     super.dispose();
   }
 
@@ -126,7 +127,7 @@ class _VerificationPageState extends State<VerificationPage> {
                 height: screenHeight * 0.1,
                 width: screenWidth * 0.18,
                 child: TextFormField(
-                  controller:widget.loginController.blockTwoController,
+                  controller: widget.loginController.blockTwoController,
                   onSaved: (value) => widget.loginController.blockTwoController,
                   cursorColor: const Color.fromARGB(255, 145, 55, 55),
                   focusNode: secondPinFocusNode,
@@ -155,8 +156,9 @@ class _VerificationPageState extends State<VerificationPage> {
                 height: screenHeight * 0.1,
                 width: screenWidth * 0.18,
                 child: TextFormField(
-                  controller:widget.loginController.blockThreeController,
-                  onSaved: (value) => widget.loginController.blockThreeController,
+                  controller: widget.loginController.blockThreeController,
+                  onSaved: (value) =>
+                      widget.loginController.blockThreeController,
                   cursorColor: const Color.fromARGB(255, 145, 55, 55),
                   focusNode: thirdPinFocusNode,
                   style: const TextStyle(fontSize: 24),
@@ -185,7 +187,8 @@ class _VerificationPageState extends State<VerificationPage> {
                 width: screenWidth * 0.18,
                 child: TextFormField(
                   controller: widget.loginController.blockFourController,
-                  onSaved: (value) => widget.loginController.blockFourController,
+                  onSaved: (value) =>
+                      widget.loginController.blockFourController,
                   cursorColor: const Color.fromARGB(255, 145, 55, 55),
                   focusNode: fourthPinFocusNode,
                   style: const TextStyle(fontSize: 24),

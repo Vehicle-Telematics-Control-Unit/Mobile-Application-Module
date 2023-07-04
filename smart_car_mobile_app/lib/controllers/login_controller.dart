@@ -14,6 +14,7 @@ import '../services/notification_services/notification_handler.dart';
 
 class LoginController extends GetxController {
   late UserWebServices userWebServices;
+  RxString username = ''.obs;
   late AuthenticationController authenticationController;
   // GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
   var isLoading = false.obs;
@@ -36,6 +37,18 @@ class LoginController extends GetxController {
     blockTwoController = TextEditingController();
     blockThreeController = TextEditingController();
     blockFourController = TextEditingController();
+  }
+
+  void clearVerifField() {
+    blockOneController.clear();
+    blockTwoController.clear();
+    blockThreeController.clear();
+    blockFourController.clear();
+  }
+
+  void clearField() {
+    passwordController.clear();
+    usernameController.clear();
   }
 
   @override
@@ -80,13 +93,15 @@ class LoginController extends GetxController {
           if (loginResponse.token != null) {
             authenticationController.saveToken(loginResponse.token);
             authenticationController.saveUsername(loginResponse.username);
+            username.value = loginResponse.username!;
+            debugPrint('Username value in response: ${username.value}');
             authenticationController.saveEmail(loginResponse.email);
             authenticationController.saveLoginStatus(true);
             authenticationController.isLogged.value = true;
             usernameController.clear();
             passwordController.clear();
             debugPrint('saved token is ${authenticationController.getToken()}');
-            Get.offAll(AppRoutes.bottomNavBar); // Nav Button
+            Get.to(AppRoutes.bottomNavBar); // Nav Button
           }
         }
       }
@@ -130,12 +145,15 @@ class LoginController extends GetxController {
         if (loginResponse.token != null) {
           authenticationController.saveToken(loginResponse.token);
           authenticationController.saveUsername(loginResponse.username);
+          username.value = loginResponse.username!;
+          debugPrint('Username value in response: ${username.value}');
           authenticationController.saveEmail(loginResponse.email);
           authenticationController.saveLoginStatus(true);
           debugPrint(
               "is logged in controller:  ${authenticationController.getLoginStatus()}");
           authenticationController.isLogged.value = true;
           debugPrint('saved token is ${authenticationController.getToken()}');
+
           Get.toNamed(AppRoutes.bottomNavBar); // Nav Button
           blockOneController.text = '';
           blockTwoController.text = '';
@@ -176,7 +194,7 @@ class LoginController extends GetxController {
     authenticationController.logOut();
     authenticationController.removeUsername();
     authenticationController.removeEmail();
-    
+    authenticationController.removeToken();
   }
 
   String? validatePassword(String? value) {

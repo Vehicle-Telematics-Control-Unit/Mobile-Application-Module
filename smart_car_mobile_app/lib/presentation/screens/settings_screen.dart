@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
+import 'package:smart_car_mobile_app/presentation/widgets/settings/edit_account.dart';
 
 import 'package:smart_car_mobile_app/presentation/widgets/settings/notifications_options.dart';
 import '../../controllers/share_access_controller.dart';
@@ -19,6 +20,11 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   bool valNotify = true;
   @override
   Widget build(BuildContext context) {
@@ -51,7 +57,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               height: screenHeight * 0.08,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.to(() => EditAccount(),
+                    transition: Transition.downToUp,
+                    duration: const Duration(milliseconds: 400));
+              },
               child: AccountOptions(
                   title: 'Edit Account',
                   screenWidth: screenWidth,

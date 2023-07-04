@@ -1,14 +1,11 @@
-
-
 import 'package:firebase_messaging/firebase_messaging.dart';
-
-
+import 'package:flutter/cupertino.dart';
 
 class NotificationHandler {
-  
   static Future<String?> registerOnFirebase(
       FirebaseMessaging? firebaseMessaging) async {
     try {
+      debugPrint("register to firebase");
       await FirebaseMessaging.instance
           .setForegroundNotificationPresentationOptions(
         alert: true,
@@ -36,7 +33,6 @@ class NotificationHandler {
     }
     return null;
   }
-
 
   // static Future<void> firebaseMessagingForegroundHandler() async {
   //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {

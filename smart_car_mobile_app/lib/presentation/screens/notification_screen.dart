@@ -48,7 +48,7 @@ class _NotificationScreenState extends State<NotificationScreen>
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     newNotificationCount = 0;
-
+    debugPrint("in notification");
     // ever(notificationController.notifications.obs, (_) => setState(() {}));
     super.initState();
   }

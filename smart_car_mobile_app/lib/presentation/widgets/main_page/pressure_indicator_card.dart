@@ -24,7 +24,7 @@ class PressureIndicatorCard extends StatelessWidget {
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.only(left: 18),
+        padding: EdgeInsets.only(left: screenHeight * 0.02),
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Expanded(

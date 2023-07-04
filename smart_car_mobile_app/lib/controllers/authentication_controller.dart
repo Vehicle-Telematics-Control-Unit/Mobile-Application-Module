@@ -1,12 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:smart_car_mobile_app/services/web_services/cache_manager_service.dart';
 
 class AuthenticationController extends GetxController with CasheManagerService {
   final isLogged = false.obs;
 
+  @override
+  void dispose(){
+    super.dispose();
+  }
   void logOut() {
     isLogged.value = false;
     saveLoginStatus(false);
+    debugPrint('is loggin rom sign out ${getLoginStatus()}');
     // removeToken();
   }
 

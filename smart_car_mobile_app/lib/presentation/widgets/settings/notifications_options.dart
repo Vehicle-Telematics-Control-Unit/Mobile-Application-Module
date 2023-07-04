@@ -23,6 +23,11 @@ class NotificationOptions extends StatefulWidget {
 
 class _NotificationOptionsState extends State<NotificationOptions> {
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [

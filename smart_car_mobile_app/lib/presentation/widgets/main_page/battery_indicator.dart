@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:smart_car_mobile_app/controllers/notification_controller.dart';
 
 class BatteryIndicator extends StatelessWidget {
   const BatteryIndicator({super.key});
@@ -9,6 +13,7 @@ class BatteryIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
+    var notificationController = Get.find<NotificationController>();
     return GestureDetector(
       child: Container(
         height: double.infinity,
@@ -120,15 +125,66 @@ class BatteryIndicator extends StatelessWidget {
                           ),
                         )
                       ])),
-                ))
+                )),
+            Padding(
+              padding: EdgeInsets.only(
+                top: screenHeight * 0.02,
+                right: screenWidth * 0.02,
+              ),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: screenWidth * 0.05,
+                  ),
+                  Obx(
+                    () => Opacity(
+                      opacity:
+                          notificationController.isTirePressureWarning.value ==
+                                  true
+                              ? 1.0
+                              : 0.2,
+                      child: Image.asset(
+                        'assets/images/icons8-tire-pressure-50.png',
+                        scale: 1.8,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: screenWidth * 0.05,
+                  ),
+                  Obx(
+                    () => Opacity(
+                      opacity:
+                          notificationController.isBatteryWarning.value == true
+                              ? 1.0
+                              : 0.2,
+                      child: Image.asset(
+                        'assets/images/icons8-car-battery-50.png',
+                        scale: 1.8,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: screenWidth * 0.05,
+                  ),
+                  Obx(
+                    () => Opacity(
+                      opacity:
+                          notificationController.isHeadlightWarning.value ==
+                                  true
+                              ? 1.0
+                              : 0.2,
+                      child: Image.asset(
+                        'assets/images/icons8-headlight-50.png',
+                        scale: 1.8,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
           ]),
         ),
-        // child: Column(children: const [
-        //   // Image.asset(icon),
-        //   // Text(
-        //   //   title,
-        //   // )
-        // ]),
       ),
     );
   }

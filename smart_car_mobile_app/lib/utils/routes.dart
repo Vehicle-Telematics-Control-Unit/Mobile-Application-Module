@@ -31,4 +31,5 @@ class AppRoutes {
   static const accessDenied = '/access_denied';
   static const manageAcessScreen = '/manage_access_page';
   static const qrScannerScreen = '/qr_scanner_screen';
+  
 }

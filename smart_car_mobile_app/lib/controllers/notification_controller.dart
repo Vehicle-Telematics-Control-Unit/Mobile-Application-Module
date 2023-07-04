@@ -11,13 +11,20 @@ class NotificationController extends GetxController {
   List<NotificationModel> get notifications => _notifications.toList().obs;
   RxInt unreadCount = 0.obs;
   Timer? updateTimer;
-
+  var isBatteryWarning = false.obs;
+  var isHeadlightWarning = false.obs;
+  var isTirePressureWarning = false.obs;
   @override
   void onInit() {
     loadNotifications();
     startUpdateTimer();
 
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   void markAllAsRead() {
@@ -77,6 +84,7 @@ class NotificationController extends GetxController {
         message: message,
         timestamp: DateTime.now(),
         isRead: false);
+    updateIcons(notification);
     notification.isTapped = false.obs;
     notification.updateFormattedTimeStamp(notification.timestamp);
     updatedNotifications.insert(0, notification);
@@ -132,6 +140,30 @@ class NotificationController extends GetxController {
   void updateFormattedTimeStamps() {
     for (var notification in _notifications) {
       notification.updateFormattedTimeStamp(notification.timestamp);
+    }
+  }
+
+  void updateIcons(NotificationModel notification) {
+    debugPrint("notification mess ${notification.message}");
+    if (notification.message ==
+        'You need to check the Tyre pressure') {
+      isTirePressureWarning.value = true;
+    } else if (notification.message ==
+        'Tyre pressure in good condition') {
+      isTirePressureWarning.value = false;
+    } else if (notification.message ==
+        "You need to check the Main 12v battery") {
+      isBatteryWarning.value = true;
+    }
+    else if (notification.message ==
+        "Main 12v battery in good condition") {
+      isBatteryWarning.value = false;
+    }
+    else if (notification.message ==
+        "You need to check the Head lights") {
+      isHeadlightWarning.value = true;
+    } else if (notification.message == "Tyre pressure in good condition") {
+      isHeadlightWarning.value = false;
     }
   }
 }

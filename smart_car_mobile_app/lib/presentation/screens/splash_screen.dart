@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:smart_car_mobile_app/presentation/screens/login_page.dart';
 import 'package:smart_car_mobile_app/presentation/widgets/on_board.dart';
 
 import '../../controllers/authentication_controller.dart';
@@ -13,8 +14,13 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   final AuthenticationController authenticationController =
-      Get.put(AuthenticationController());
+      Get.find<AuthenticationController>();
   late final Future intialize;
 
   @override
@@ -39,8 +45,8 @@ class _SplashScreenState extends State<SplashScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return splashView(screenWidth, screenHight);
           } else {
-            // authenticationController.logOut();
-            return const OnBoard();
+            // return const OnBoard();
+            return const LoginPage();
           }
         });
   }

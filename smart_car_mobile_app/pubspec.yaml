@@ -21,7 +21,7 @@ version: 1.0.0+1
 
 environment:
   sdk: '>=2.19.2 <3.0.0'
-  
+
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
 # consider running `flutter pub upgrade --major-versions`. Alternatively,
@@ -34,13 +34,14 @@ dependencies:
   badges: ^3.1.1
   build_runner: ^2.3.3
   cache_manager: ^1.0.0+4
+  clay_containers: ^0.3.2
   cupertino_icons: ^1.0.2
   device_preview: ^1.1.0
   dio: ^5.0.0
   encrypt: ^5.0.1
   equatable: ^2.0.5
-  firebase_core: ^2.11.0
-  firebase_messaging: ^14.5.0
+  
+  firebase_messaging: ^14.6.4
   flex_color_scheme: ^7.1.2
   flutter:
     sdk: flutter
@@ -48,7 +49,6 @@ dependencies:
   flutter_bloc: ^8.1.2
   flutter_local_notifications: ^14.0.0+2
   flutter_localization: ^0.1.11
-  flutter_neumorphic: ^3.2.0
   flutter_offline: ^2.1.0
   flutter_polyline_points: ^1.0.0
   flutter_secure_storage: ^8.0.0
@@ -66,7 +66,7 @@ dependencies:
   line_icons: ^2.0.1
   lottie: ^2.4.0
   mobile_scanner: ^3.0.0-beta.4
-  signalr_core: ^1.1.1 
+  flutter_pw_validator: ^1.6.0
   page_transition: ^2.0.9
   percent_indicator: ^4.2.3
   permission_handler: ^10.3.0
@@ -77,6 +77,7 @@ dependencies:
   shared_preferences: ^2.1.1
   shimmer: ^3.0.0
   shimmer_animation: ^2.1.0+1
+  signalr_core: ^1.1.1
   signalr_netcore: ^0.1.7+2-nullsafety.3
   toast: ^0.3.0
   web_socket_channel: ^2.4.0
@@ -110,6 +111,9 @@ flutter:
     - assets/13865-sign-for-error-flat-style.json
     - assets/92615-forgot-password-password-reset.json
     - assets/map_styles.json
+    - assets/images/icons8-tire-pressure-50.png
+    - assets/images/icons8-car-battery-50.png 
+    - assets/images/icons8-headlight-50.png
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
