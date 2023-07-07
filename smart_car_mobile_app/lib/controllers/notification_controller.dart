@@ -145,25 +145,23 @@ class NotificationController extends GetxController {
 
   void updateIcons(NotificationModel notification) {
     debugPrint("notification mess ${notification.message}");
-    if (notification.message ==
-        'You need to check the Tyre pressure') {
+    if (notification.message == 'You need to check the Tyre pressure') {
       isTirePressureWarning.value = true;
-    } else if (notification.message ==
-        'Tyre pressure in good condition') {
+    } else if (notification.message == 'Tyre pressure in good condition') {
       isTirePressureWarning.value = false;
     } else if (notification.message ==
         "You need to check the Main 12v battery") {
       isBatteryWarning.value = true;
-    }
-    else if (notification.message ==
-        "Main 12v battery in good condition") {
+    } else if (notification.message == "Main 12v battery in good condition") {
       isBatteryWarning.value = false;
-    }
-    else if (notification.message ==
-        "You need to check the Head lights") {
+    } else if (notification.message == "You need to check the Head lights") {
       isHeadlightWarning.value = true;
     } else if (notification.message == "Tyre pressure in good condition") {
       isHeadlightWarning.value = false;
     }
+  }
+
+  void deleteNotifications() {
+    _notifications.clear();
   }
 }

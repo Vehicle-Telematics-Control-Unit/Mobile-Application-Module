@@ -114,6 +114,9 @@ flutter:
     - assets/images/icons8-tire-pressure-50.png
     - assets/images/icons8-car-battery-50.png 
     - assets/images/icons8-headlight-50.png
+    - assets/images/51657.jpg
+    - assets/images/gps.png
+    
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

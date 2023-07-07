@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:smart_car_mobile_app/presentation/screens/login_page.dart';
-import 'package:smart_car_mobile_app/presentation/widgets/on_board.dart';
+
 
 import '../../controllers/authentication_controller.dart';
+import 'login_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

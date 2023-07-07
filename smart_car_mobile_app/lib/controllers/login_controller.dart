@@ -82,7 +82,7 @@ class LoginController extends GetxController {
       Response response = await userWebServices.userLogin(
           usernameController.text, passwordController.text, notificationToken);
 
-      if (response != null && response.statusCode == 200) {
+      if (response.statusCode == 200) {
         // 200
         if (response.data['message'] == "otp code sent") {
           authenticationController.saveEmail(response.data['email']);
@@ -140,7 +140,7 @@ class LoginController extends GetxController {
           notificationToken: notificationToken);
       debugPrint('user token is ${verifyUserCommand.token}');
       Response response = await userWebServices.verifyEmail(verifyUserCommand);
-      if (response != null && response.statusCode == 200) {
+      if (response.statusCode == 200) {
         var loginResponse = LoginResponse.fromJson(response.data);
         if (loginResponse.token != null) {
           authenticationController.saveToken(loginResponse.token);

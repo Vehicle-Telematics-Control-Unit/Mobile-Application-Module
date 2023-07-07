@@ -32,7 +32,7 @@ class OfflineWrapper extends StatelessWidget {
                   color: Colors.grey[900],
                   child: const Center(
                     child: Row(
-                      children:  [
+                      children: [
                         Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Icon(
@@ -40,7 +40,7 @@ class OfflineWrapper extends StatelessWidget {
                             color: Colors.red,
                           ),
                         ),
-                        Text('Connection Lost',
+                        Text('No internet connection please try again later',
                             style: TextStyle(color: Colors.white)),
                       ],
                     ),

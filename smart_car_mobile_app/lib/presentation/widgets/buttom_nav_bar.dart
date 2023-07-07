@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:smart_car_mobile_app/controllers/SUMS_controller.dart';
+import 'package:smart_car_mobile_app/controllers/gps_controller.dart';
 
 import 'package:smart_car_mobile_app/controllers/notification_controller.dart';
+import 'package:smart_car_mobile_app/presentation/screens/market_page.dart';
 
 import 'package:smart_car_mobile_app/presentation/screens/nav_screen.dart';
 import 'package:badges/badges.dart' as badges;
@@ -28,24 +31,28 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+  var gpsController = Get.find<GpsController>();
+  var sumsController = Get.find<SUMSController>();
   static int semaphore = 0;
   List<Widget> _buildScreens() {
     return [
       MainScreen(),
       const NavScreen(),
       const NotificationScreen(),
+      const MarketPage(),
       SettingsScreen(),
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     var notificationController = Get.find<NotificationController>();
+
     return [
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.home_sharp,
-            shadows: [Shadow(color: Colors.white70, blurRadius: 15.0)]),
+            shadows: [Shadow(color: Colors.white70, blurRadius: 7.0)]),
         inactiveIcon: const Icon(Icons.home_outlined,
-            shadows: [Shadow(color: Colors.white70, blurRadius: 15.0)]),
+            shadows: [Shadow(color: Colors.white70, blurRadius: 7.0)]),
         // title: ("Home"),
         activeColorPrimary: CupertinoColors.white,
         inactiveColorPrimary: CupertinoColors.white,
@@ -53,9 +60,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
       PersistentBottomNavBarItem(
         // title: ("Navigation"),
         icon: const Icon(Icons.navigation_sharp,
-            shadows: [Shadow(color: Colors.white70, blurRadius: 15.0)]),
+            shadows: [Shadow(color: Colors.white70, blurRadius: 7.0)]),
         inactiveIcon: const Icon(Icons.navigation_outlined,
-            shadows: [Shadow(color: Colors.white70, blurRadius: 15.0)]),
+            shadows: [Shadow(color: Colors.white70, blurRadius: 7.0)]),
         activeColorPrimary: CupertinoColors.white,
         inactiveColorPrimary: CupertinoColors.white,
       ),
@@ -65,7 +72,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           () {
             notificationController.markAllAsRead();
             return const Icon(Icons.notifications,
-                shadows: [Shadow(color: Colors.white70, blurRadius: 15.0)]);
+                shadows: [Shadow(color: Colors.white70, blurRadius: 7.0)]);
           },
         ),
         inactiveIcon: Obx(() {
@@ -77,11 +84,22 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   badgeContent:
                       Text(notificationController.unreadCount.value.toString()),
                   child: const Icon(Icons.notifications_outlined, shadows: [
-                    Shadow(color: Colors.white70, blurRadius: 15.0)
+                    Shadow(color: Colors.white70, blurRadius: 7.0)
                   ]))
               : const Icon(Icons.notifications_outlined,
-                  shadows: [Shadow(color: Colors.white70, blurRadius: 15.0)]);
+                  shadows: [Shadow(color: Colors.white70, blurRadius: 7.0)]);
         }),
+        activeColorPrimary: CupertinoColors.white,
+        inactiveColorPrimary: CupertinoColors.white,
+      ),
+      PersistentBottomNavBarItem(
+        // title: ("Market"),
+
+        icon: const Icon(Icons.shopping_cart,
+            shadows: [Shadow(color: Colors.white70, blurRadius: 7.0)]),
+        inactiveIcon: const Icon(Icons.shopping_cart_outlined,
+            shadows: [Shadow(color: Colors.white70, blurRadius: 7.0)]),
+        // inactiveIcon: const Icon(Icons.settings_outlined),
         activeColorPrimary: CupertinoColors.white,
         inactiveColorPrimary: CupertinoColors.white,
       ),
@@ -89,9 +107,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
         // title: ("Settings"),
 
         icon: const Icon(Icons.settings_sharp,
-            shadows: [Shadow(color: Colors.white70, blurRadius: 15.0)]),
+            shadows: [Shadow(color: Colors.white70, blurRadius: 7.0)]),
         inactiveIcon: const Icon(Icons.settings_outlined,
-            shadows: [Shadow(color: Colors.white70, blurRadius: 15.0)]),
+            shadows: [Shadow(color: Colors.white70, blurRadius: 7.0)]),
         // inactiveIcon: const Icon(Icons.settings_outlined),
         activeColorPrimary: CupertinoColors.white,
         inactiveColorPrimary: CupertinoColors.white,
@@ -165,7 +183,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
       controller: controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
-
+      onItemSelected: (i) {
+        if (i == 3) {
+          sumsController.fetchFeatures();
+        } else if (i == 1) {
+          gpsController.intializeSignalR();
+        }
+      },
       confineInSafeArea: true,
       backgroundColor: CupertinoColors.darkBackgroundGray,
       navBarHeight: 70,

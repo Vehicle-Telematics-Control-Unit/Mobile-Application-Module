@@ -5,10 +5,7 @@ import 'package:smart_car_mobile_app/services/web_services/cache_manager_service
 class AuthenticationController extends GetxController with CasheManagerService {
   final isLogged = false.obs;
 
-  @override
-  void dispose(){
-    super.dispose();
-  }
+  
   void logOut() {
     isLogged.value = false;
     saveLoginStatus(false);
@@ -23,8 +20,8 @@ class AuthenticationController extends GetxController with CasheManagerService {
 
   void checkLoginStatus() {
     final token = getToken();
-    if (token != null) {
-      isLogged.value = true;
-    }
+    isLogged.value = true;
   }
+
+  
 }

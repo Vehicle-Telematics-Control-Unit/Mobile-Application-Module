@@ -42,7 +42,7 @@ class ChangeUsernameController extends GetxController {
       String token = authenticationController.getToken();
       Response response =
           await userWebServices.changeUsername(usernameController.text, token);
-      if (response != null && response.statusCode == 200) {
+      if (response.statusCode == 200) {
         authenticationController.saveUsername(usernameController.text);
         loginController.username.value = usernameController.text;
         usernameController.clear();

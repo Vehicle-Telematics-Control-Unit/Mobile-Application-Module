@@ -14,10 +14,6 @@ class TcuController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   Future<dynamic> wakeUpTCU() async {
     var authToken = authenticationController.getToken();

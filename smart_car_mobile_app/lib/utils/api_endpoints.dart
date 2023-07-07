@@ -9,4 +9,7 @@ class ApiEndPoints {
   static const String wakeUpTCU = '/alerts';
   static const String changePassword = '/authentication/mobile/editPassword';
   static const String changeUsername = '/authentication/mobile/editUsername';
+  static const String feature = '/OTA/mobile/features';
+  static const String getTcuId = '/gps/tcu';
+  static const String getFeatureImage = "features/images";
 }

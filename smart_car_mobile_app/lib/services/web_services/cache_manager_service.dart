@@ -1,10 +1,15 @@
-
 import 'package:get_storage/get_storage.dart';
 
 mixin CasheManagerService {
   Future<bool> saveToken(String? token) async {
     final storage = GetStorage();
     await storage.write('token', token);
+    return true;
+  }
+
+  Future<bool> saveTcuId(int? tcuId) async {
+    final storage = GetStorage();
+    await storage.write('tcuId', tcuId);
     return true;
   }
 
@@ -19,17 +24,24 @@ mixin CasheManagerService {
     await storage.write('email', email);
     return true;
   }
+
   Future<bool> saveLoginStatus(bool? status) async {
     final storage = GetStorage();
     await storage.write('isLoggedIn', status);
     return true;
   }
+
   bool? getLoginStatus() {
     final storage = GetStorage();
     return storage.read('isLoggedIn');
   }
 
-   Future<bool> saveDeviceId(String? deviceId) async {
+  int getTcuId() {
+    final storage = GetStorage();
+    return storage.read('tcuId');
+  }
+
+  Future<bool> saveDeviceId(String? deviceId) async {
     final storage = GetStorage();
     await storage.write('deviceId', deviceId);
     return true;

@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:platform_device_id/platform_device_id.dart';
@@ -6,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:smart_car_mobile_app/data/models/change-password-model.dart';
+import 'package:smart_car_mobile_app/data/models/get-feature-model.dart';
 import 'package:smart_car_mobile_app/data/models/submit-access-model.dart';
 import 'package:smart_car_mobile_app/data/models/verify-user-command.dart';
 import '../../presentation/widgets/settings/access_denied.dart';
@@ -201,6 +203,98 @@ class UserWebServices extends GetConnect {
       } else {
         Get.showSnackbar(snackBar("An error occured"));
       }
+    }
+  }
+
+  Future<dynamic> fetchFeatures(String authToken) async {
+    try {
+      dio.options.headers = {
+        'Authorization': 'Bearer $authToken',
+      };
+      Response response = await dio.get(
+        ApiEndPoints.feature,
+      );
+      return response;
+    } on DioException catch (e) {
+      debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
+      if (e.response != null &&
+          e.response?.statusCode == HttpStatus.unauthorized) {
+        Get.showSnackbar(snackBar("You dont have access!"));
+      } else {
+        Get.showSnackbar(snackBar("An error occured"));
+      }
+    }
+  }
+
+  Future<dynamic> activateFeature(String authToken, var id) async {
+    try {
+      dio.options.headers = {
+        'Authorization': 'Bearer $authToken',
+      };
+      debugPrint('feature id $id');
+      var getFeatureModel = GetFeatureModel();
+      getFeatureModel.featureId = id;
+      Response response =
+          await dio.put(ApiEndPoints.feature, data: getFeatureModel.toJson());
+      return response;
+    } on DioException catch (e) {
+      debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
+      if (e.response?.statusCode == HttpStatus.unauthorized) {
+        Get.showSnackbar(snackBar("You dont have access!"));
+      } else {
+        Get.showSnackbar(snackBar("An error occured"));
+      }
+    }
+  }
+
+  Future<dynamic> deactivateFeature(String authToken, int id) async {
+    try {
+      dio.options.headers = {
+        'Authorization': 'Bearer $authToken',
+      };
+      debugPrint('feature id $id');
+      var getFeatureModel = GetFeatureModel();
+      getFeatureModel.featureId = id;
+      Response response = await dio.delete(ApiEndPoints.feature,
+          data: getFeatureModel.toJson());
+      return response;
+    } on DioException catch (e) {
+      debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
+      if (e.response?.statusCode == HttpStatus.unauthorized) {
+        Get.showSnackbar(snackBar("You dont have access!"));
+      } else {
+        Get.showSnackbar(snackBar("An error occured"));
+      }
+    }
+  }
+
+  Future<dynamic> getTcuId(String authToken) async {
+    try {
+      dio.options.headers = {
+        'Authorization': 'Bearer $authToken',
+      };
+
+      Response response = await dio.get(
+        ApiEndPoints.getTcuId,
+      );
+      return response;
+    } on DioException catch (e) {
+      debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
+    }
+  }
+
+  Future<dynamic> getFeatureImage(String authToken, int featureId) async {
+    try {
+      dio.options.headers = {
+        'Authorization': 'Bearer $authToken',
+      };
+
+      Response response = await dio.get(
+        '${ApiEndPoints.getFeatureImage}/$featureId',
+      );
+      return response;
+    } on DioException catch (e) {
+      debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
     }
   }
 }

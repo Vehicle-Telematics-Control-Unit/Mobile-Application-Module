@@ -76,6 +76,18 @@ class _NotificationScreenState extends State<NotificationScreen>
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(
+                top: screenHeight * 0.03,
+              ),
+              child: IconButton(
+                  onPressed: () {
+                    notificationController.deleteNotifications();
+                  },
+                  icon: const Icon(Icons.delete)),
+            )
+          ],
           title: Padding(
             padding: EdgeInsets.only(
               top: screenHeight * 0.03,

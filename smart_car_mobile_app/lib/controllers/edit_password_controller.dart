@@ -48,7 +48,7 @@ class EditPasswordController extends GetxController {
       String token = authenticationController.getToken();
       Response response = await userWebServices.changePassword(
           passwordController.text, newPasswordController.text, token);
-      if (response != null && response.statusCode == 200) {
+      if (response.statusCode == 200) {
         Get.showSnackbar(snackBar("Password Changed!"));
         clearPasswordField();
       }

@@ -6,7 +6,7 @@ import 'package:smart_car_mobile_app/controllers/edit_password_controller.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
-  ChangePasswordScreen({super.key});
+  const ChangePasswordScreen({super.key});
 
   @override
   State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
