@@ -86,7 +86,7 @@ class LoginController extends GetxController {
         // 200
         if (response.data['message'] == "otp code sent") {
           authenticationController.saveEmail(response.data['email']);
-          authenticationController.saveDeviceId(response.data['deviceId']);
+
           Get.toNamed(AppRoutes.verificationScreen);
         } else {
           var loginResponse = LoginResponse.fromJson(response.data);
@@ -133,8 +133,10 @@ class LoginController extends GetxController {
           blockTwoController.text +
           blockThreeController.text +
           blockFourController.text;
+      var deviceId = await PlatformDeviceId.getDeviceId;
+
       VerifyUserCommand verifyUserCommand = VerifyUserCommand(
-          deviceId: await PlatformDeviceId.getDeviceId,
+          deviceId: deviceId,
           userEmail: authenticationController.getEmail(),
           token: otpCode,
           notificationToken: notificationToken);
@@ -143,6 +145,7 @@ class LoginController extends GetxController {
       if (response.statusCode == 200) {
         var loginResponse = LoginResponse.fromJson(response.data);
         if (loginResponse.token != null) {
+          authenticationController.saveDeviceId(deviceId);
           authenticationController.saveToken(loginResponse.token);
           authenticationController.saveUsername(loginResponse.username);
           username.value = loginResponse.username!;
@@ -173,6 +176,20 @@ class LoginController extends GetxController {
       }
     } finally {
       verificationEmailIsLoading(false);
+    }
+  }
+
+  Future<void> resendCode() async {
+    try {
+      String deviceId = authenticationController.getDeviceId();
+      String username = authenticationController.getEmail();
+      Response response = await userWebServices.resendCode(deviceId, username);
+      if (response.statusCode == 200) {
+        authenticationController.saveEmail(response.data['email']);
+        
+      }
+    } on DioException catch (e) {
+      debugPrint("status code ${e.response?.statusCode}");
     }
   }
 

@@ -6,8 +6,10 @@ import 'package:platform_device_id/platform_device_id.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:smart_car_mobile_app/controllers/logout_controller.dart';
 import 'package:smart_car_mobile_app/data/models/change-password-model.dart';
 import 'package:smart_car_mobile_app/data/models/get-feature-model.dart';
+import 'package:smart_car_mobile_app/data/models/send-code-model.dart';
 import 'package:smart_car_mobile_app/data/models/submit-access-model.dart';
 import 'package:smart_car_mobile_app/data/models/verify-user-command.dart';
 import '../../presentation/widgets/settings/access_denied.dart';
@@ -285,16 +287,69 @@ class UserWebServices extends GetConnect {
 
   Future<dynamic> getFeatureImage(String authToken, int featureId) async {
     try {
+      late Dio dio;
+      BaseOptions options = BaseOptions(
+        baseUrl: ApiEndPoints.baseUrl,
+        receiveDataWhenStatusError: true,
+        connectTimeout: const Duration(seconds: 45),
+        receiveTimeout: const Duration(seconds: 45),
+        headers: {
+          HttpHeaders.acceptCharsetHeader: 'utf-8',
+        },
+        contentType: Headers.jsonContentType,
+        responseType: ResponseType.json,
+      );
+      dio = Dio(options);
       dio.options.headers = {
         'Authorization': 'Bearer $authToken',
+        'Accept': 'image/jpeg'
       };
-
+      dio.options.responseType = ResponseType.bytes;
       Response response = await dio.get(
         '${ApiEndPoints.getFeatureImage}/$featureId',
       );
+
       return response;
     } on DioException catch (e) {
       debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
+    }
+  }
+
+  Future<dynamic> logout(String authToken) async {
+    try {
+      dio.options.headers = {
+        'Authorization': 'Bearer $authToken',
+      };
+      Response response = await dio.post(ApiEndPoints.logout);
+      await Future.delayed(const Duration(seconds: 2));
+      return response;
+    } on DioException catch (e) {
+      debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
+      if (e.response?.statusCode == HttpStatus.unauthorized) {
+        debugPrint("status code ${e.response?.statusCode}");
+
+        Get.showSnackbar(snackBar("You are not authorized"));
+      } else {
+        Get.showSnackbar(snackBar("An error occured"));
+      }
+    }
+  }
+
+  Future<dynamic> resendCode(String deviceId, String username) async {
+     try {
+      SendCodeModel sendCodeModel = SendCodeModel(deviceId: deviceId,username: username); 
+      Response response = await dio.post(ApiEndPoints.resendCode,data: sendCodeModel.toJson());
+      await Future.delayed(const Duration(seconds: 2));
+      return response;
+    } on DioException catch (e) {
+      debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
+      if (e.response?.statusCode == HttpStatus.unauthorized) {
+        debugPrint("status code ${e.response?.statusCode}");
+
+        Get.showSnackbar(snackBar("You are not authorized"));
+      } else {
+        Get.showSnackbar(snackBar("An error occured"));
+      }
     }
   }
 }

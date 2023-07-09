@@ -19,7 +19,7 @@ class AuthenticationController extends GetxController with CasheManagerService {
   // }
 
   void checkLoginStatus() {
-    final token = getToken();
+    getToken();
     isLogged.value = true;
   }
 

@@ -1,9 +1,12 @@
+
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart' hide Response;
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:signalr_core/signalr_core.dart';
+import 'package:smart_car_mobile_app/data/models/get-tcu-model.dart';
 import 'package:smart_car_mobile_app/services/web_services/user_web_services.dart';
 import 'authentication_controller.dart';
 
@@ -53,15 +56,24 @@ class GpsController extends GetxController {
     }
   }
 
-  Future<dynamic> getTcuId() async {
+  Future<int?> getTcuId() async {
     try {
       String token = authenticationController.getToken();
       Response response = await userWebServices.getTcuId(token);
       if (response.statusCode == 200) {
-        return response.data['id'];
+        var tcuResponse = GetTcuModel.fromJson(response.data);
+
+        // var jsonData=
+        // int tcuId = int.parse(response.data['id']);
+        // authenticationController.saveTcuId(tcuId);
+        debugPrint("status code of gps  is ${response.statusCode}");
+        debugPrint("response data is ${tcuResponse.id}");
+        authenticationController.saveTcuId(tcuResponse.id);
       }
+      return null;
     } on DioException catch (e) {
       debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
+      return null;
     }
   }
 

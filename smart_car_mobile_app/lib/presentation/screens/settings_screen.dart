@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:smart_car_mobile_app/presentation/widgets/settings/edit_account.dart';
 
-import 'package:smart_car_mobile_app/presentation/widgets/settings/notifications_options.dart';
+
 import '../../controllers/share_access_controller.dart';
 
 import '../widgets/settings/account_options.dart';
@@ -113,32 +113,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
             SizedBox(
               height: screenHeight * 0.03,
             ),
-            InkWell(
-              onTap: () {},
-              child: AccountOptions(
-                  title: 'Shared Devices',
-                  screenWidth: screenWidth,
-                  screenHeight: screenHeight,
-                  icon: Icons.groups),
-            ),
-            const Divider(
-              thickness: 1,
-            ),
-            SizedBox(
-              height: screenHeight * 0.03,
-            ),
-            NotificationOptions(
-                title: " Allow Notifications",
-                icon: Icons.notifications_active_outlined,
-                screenWidth: screenWidth,
-                value: valNotify,
-                screenHeight: screenHeight),
-            const Divider(
-              thickness: 1,
-            ),
-            SizedBox(
-              height: screenHeight * 0.03,
-            ),
+            // InkWell(
+            //   onTap: () {},
+            //   child: AccountOptions(
+            //       title: 'Shared Devices',
+            //       screenWidth: screenWidth,
+            //       screenHeight: screenHeight,
+            //       icon: Icons.groups),
+            // ),
+            // const Divider(
+            //   thickness: 1,
+            // ),
+            // SizedBox(
+            //   height: screenHeight * 0.03,
+            // ),
+            // NotificationOptions(
+            //     title: " Allow Notifications",
+            //     icon: Icons.notifications_active_outlined,
+            //     screenWidth: screenWidth,
+            //     value: valNotify,
+            //     screenHeight: screenHeight),
+            // const Divider(
+            //   thickness: 1,
+            // ),
+            // SizedBox(
+            //   height: screenHeight * 0.03,
+            // ),
             SignOutOption(screenWidth: screenWidth)
           ]),
         ),

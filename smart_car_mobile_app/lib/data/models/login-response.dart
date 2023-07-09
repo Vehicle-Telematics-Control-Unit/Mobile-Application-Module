@@ -1,4 +1,4 @@
-// ignore: file_names
+
 
 import 'package:json_annotation/json_annotation.dart';
 part 'login-response.g.dart';

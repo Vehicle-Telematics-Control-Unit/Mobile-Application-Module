@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -21,12 +23,39 @@ class _VerificationPageState extends State<VerificationPage> {
   late FocusNode secondPinFocusNode;
   late FocusNode thirdPinFocusNode;
   late FocusNode fourthPinFocusNode;
+  bool isResendCodeEnabled = false;
+  bool isTimerActive = false;
+  Timer? resendCodeTimer;
+
+  void startResendCodeTimer() {
+    isTimerActive = true;
+    resendCodeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (timer.tick >= 45) {
+          timer.cancel();
+          isResendCodeEnabled = true; // Enable the resend code button
+          isTimerActive = false;
+        }
+      });
+    });
+  }
+
+  void resendVerificationCode() {
+    // Perform the code to resend the verification code
+    // ...
+    widget.loginController.resendCode();
+    setState(() {
+      isResendCodeEnabled = false; // Disable the resend code button
+    });
+    startResendCodeTimer(); // Start the timer again
+  }
 
   @override
   void initState() {
     secondPinFocusNode = FocusNode();
     thirdPinFocusNode = FocusNode();
     fourthPinFocusNode = FocusNode();
+    startResendCodeTimer();
     super.initState();
   }
 
@@ -46,6 +75,7 @@ class _VerificationPageState extends State<VerificationPage> {
     thirdPinFocusNode.dispose();
     fourthPinFocusNode.dispose();
     widget.loginController.clearVerifField();
+    resendCodeTimer?.cancel();
     super.dispose();
   }
 
@@ -260,21 +290,34 @@ class _VerificationPageState extends State<VerificationPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Resend code in  ',
+        TextButton(
+          onPressed: isResendCodeEnabled
+              ? resendVerificationCode
+              : null, // Enable or disable the button based on isResendCodeEnabled,
+          child: Text(
+            'Resend code ',
             style: GoogleFonts.lato(
-              color: Colors.grey[500],
+              color: isResendCodeEnabled ? Colors.grey[500] : Colors.grey[800],
               fontWeight: FontWeight.bold,
               fontSize: 15,
-            )),
-        TweenAnimationBuilder(
-          tween: Tween(begin: 30.0, end: 0),
-          duration: const Duration(seconds: 45),
-          builder: (context, value, child) => Text(
-            "00:${value.toInt()}",
-            style: const TextStyle(color: Color.fromARGB(182, 227, 34, 20)),
+            ),
           ),
-          onEnd: () {},
-        )
+        ),
+        if (isTimerActive)
+          TweenAnimationBuilder(
+            tween: Tween(begin: 45.0, end: 0),
+            duration: const Duration(seconds: 45),
+            builder: (context, value, child) => Text(
+              "00:${value.toInt()}",
+              style: const TextStyle(color: Color.fromARGB(182, 227, 34, 20)),
+            ),
+            onEnd: () {
+              setState(() {
+                isResendCodeEnabled = true; // Enable the resend code button
+                isTimerActive = false;
+              });
+            },
+          )
       ],
     );
   }

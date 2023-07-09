@@ -1,11 +1,12 @@
-import 'dart:async';
+
 
 import 'package:flutter/material.dart';
-import 'package:flutter_offline/flutter_offline.dart';
+
 import 'package:get/get.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:signalr_core/signalr_core.dart';
+
+import 'package:smart_car_mobile_app/controllers/SUMS_controller.dart';
 
 import 'package:smart_car_mobile_app/controllers/authentication_controller.dart';
 
@@ -21,13 +22,14 @@ class Maps extends StatefulWidget {
 class _MapsState extends State<Maps> {
   var gpsController = Get.find<GpsController>();
   var authenticationController = Get.find<AuthenticationController>();
-  late var tcuId;
+  var sumsController = Get.find<SUMSController>();
+  late int tcuId;
   // late LatLng _markerPosition;
   @override
   void initState() {
     // Trigger the RequestGPS method when the screen is loaded
     super.initState();
-    getTcuId();
+    gpsController.getTcuId();
 
     debugPrint("i am in mapsss");
     // intializeSignalR();
@@ -43,6 +45,7 @@ class _MapsState extends State<Maps> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: Obx(
         () {
@@ -108,10 +111,5 @@ class _MapsState extends State<Maps> {
 
   void _goToMarker() {
     gpsController.goToMarker();
-  }
-
-  void getTcuId() {
-    tcuId = gpsController.getTcuId();
-    authenticationController.saveTcuId(tcuId);
   }
 }

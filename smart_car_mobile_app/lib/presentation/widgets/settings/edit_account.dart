@@ -75,7 +75,7 @@ class _EditAccountState extends State<EditAccount> {
             ),
             InkWell(
               onTap: () {
-                Get.to(ChangePasswordScreen(),
+                Get.to(const ChangePasswordScreen(),
                     transition: Transition.downToUp,
                     duration: const Duration(milliseconds: 400));
               },

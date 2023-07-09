@@ -1,6 +1,6 @@
 
 
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -63,138 +63,235 @@ class _MarketPageState extends State<MarketPage> {
                 );
               }
               final featuresInfo = sumsController.featuresInfo;
-              return ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: featuresInfo.length,
-                itemBuilder: (context, index) {
-                  Feature feature = featuresInfo[index];
-                  return Card(
-                    color: Colors.grey.shade900,
-                    child: Padding(
-                      padding: EdgeInsets.all(screenWidth * 0.02),
-                      child: Row(
-                        children: [
-                          ClipRRect(
-                            
-                            borderRadius: BorderRadius.circular(15),
-                            child: Image.asset(
-                              'assets/images/51657.jpg',
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
+              return RefreshIndicator(
+                color: Colors.grey.shade500,
+                onRefresh: sumsController.fetchFeatures,
+                child: ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: featuresInfo.length,
+                  itemBuilder: (context, index) {
+                    Feature feature = featuresInfo[index];
+                    return Card(
+                      color: Colors.grey.shade900,
+                      child: Padding(
+                        padding: EdgeInsets.all(screenWidth * 0.02),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: FutureBuilder<dynamic>(
+                                  future: sumsController
+                                      .getFeatureImage(feature.id),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    } else if (snapshot.hasError) {
+                                      return const Text('Error loading image');
+                                    } else if (snapshot.hasData) {
+                                      final featureImageBytes = snapshot.data;
+
+                                      return Image.memory(
+                                        featureImageBytes,
+                                        width: screenHeight * 0.15,
+                                        height: screenWidth * 0.2,
+                                        fit: BoxFit.fill,
+                                      );
+                                    } else {
+                                      return const Text('No image available');
+                                    }
+                                  },
+                                )),
+                            SizedBox(width: screenWidth * 0.03),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    feature.name,
+                                    style: GoogleFonts.lato(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: const Color.fromRGBO(
+                                        255,
+                                        255,
+                                        255,
+                                        0.8,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: screenHeight * 0.01),
+                                  Text(
+                                    feature.description,
+                                    style: GoogleFonts.lato(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: const Color.fromRGBO(
+                                        255,
+                                        255,
+                                        255,
+                                        0.6,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          SizedBox(width: screenWidth * 0.03),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  feature.name,
-                                  style: GoogleFonts.lato(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: const Color.fromRGBO(
-                                      255,
-                                      255,
-                                      255,
-                                      0.8,
+                            SizedBox(width: screenWidth * 0.05),
+                            if (feature.state == 1)
+                              InkWell(
+                                onTap: () {
+                                  sumsController.deactivateFeature(feature);
+                                },
+                                child: Container(
+                                  width: 70,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade800,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Center(
+                                    child: Obx(() {
+                                      if (sumsController
+                                          .isLoadingActivateFeature.value) {
+                                        return Shimmer(
+                                          duration: const Duration(
+                                              seconds: 5), //Default value
+                                          interval: const Duration(
+                                              seconds:
+                                                  0), //Default value: Duration(seconds: 0)
+                                          color: Colors.white, //Default value
+                                          colorOpacity: 0, //Default value
+                                          enabled: true, //Default value
+                                          direction:
+                                              const ShimmerDirection.fromLTRB(),
+                                          child: const Text(
+                                            'Uninstall',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      return const Text(
+                                        'Uninstall',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              )
+                            else if (feature.state == 0)
+                              InkWell(
+                                onTap: () {
+                                  sumsController.activateFeature(feature);
+                                },
+                                child: Container(
+                                  width: 70,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade800,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Center(
+                                    child: Obx(() {
+                                      if (sumsController
+                                          .isLoadingActivateFeature.value) {
+                                        return Shimmer(
+                                          duration: const Duration(
+                                              seconds: 5), //Default value
+                                          interval: const Duration(
+                                              seconds:
+                                                  0), //Default value: Duration(seconds: 0)
+                                          color: Colors.white, //Default value
+                                          colorOpacity: 0, //Default value
+                                          enabled: true, //Default value
+                                          direction:
+                                              const ShimmerDirection.fromLTRB(),
+                                          child: const Text(
+                                            'Get',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      return const Text(
+                                        'Get',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              )
+                            else if (feature.state == 2)
+                              InkWell(
+                                onTap: () {},
+                                child: Container(
+                                  width: 70,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade800,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                      'Pending install',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12),
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: screenHeight * 0.01),
-                                Text(
-                                  feature.description,
-                                  style: GoogleFonts.lato(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: const Color.fromRGBO(
-                                      255,
-                                      255,
-                                      255,
-                                      0.6,
+                              )
+                            else if (feature.state == 3)
+                              InkWell(
+                                onTap: () {},
+                                child: Container(
+                                  width: 70,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade800,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                      'pending update',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(width: screenWidth * 0.05),
-                          // if (feature.isActive)
-                          //   InkWell(
-                          //     onTap: () {
-                          //       sumsController.deactivateFeature(feature);
-                          //     },
-                          //     child: Container(
-                          //       width: 70,
-                          //       height: 30,
-                          //       decoration: BoxDecoration(
-                          //         color: Colors.grey.shade600,
-                          //         borderRadius: BorderRadius.circular(15),
-                          //       ),
-                          //       child: const Center(
-                          //         child: Text(
-                          //           'Uninstall',
-                          //           style: TextStyle(
-                          //             color: Colors.white,
-                          //             fontWeight: FontWeight.bold,
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   )
-                          // else
-                          //   InkWell(
-                          //     onTap: () {
-                          //       sumsController.activateFeature(feature);
-                          //     },
-                          //     child: Container(
-                          //       width: 70,
-                          //       height: 30,
-                          //       decoration: BoxDecoration(
-                          //         color: Colors.grey.shade800,
-                          //         borderRadius: BorderRadius.circular(15),
-                          //       ),
-                          //       child: Center(
-                          //         child: Obx(() {
-                          //           if (sumsController
-                          //               .isLoadingActivateFeature.value) {
-                          //             return Shimmer(
-                          //               duration: const Duration(
-                          //                   seconds: 5), //Default value
-                          //               interval: const Duration(
-                          //                   seconds:
-                          //                       0), //Default value: Duration(seconds: 0)
-                          //               color: Colors.white, //Default value
-                          //               colorOpacity: 0, //Default value
-                          //               enabled: true, //Default value
-                          //               direction:
-                          //                   const ShimmerDirection.fromLTRB(),
-                          //               child: const Text(
-                          //                 'Get',
-                          //                 style: TextStyle(
-                          //                   color: Colors.white,
-                          //                   fontWeight: FontWeight.bold,
-                          //                 ),
-                          //               ),
-                          //             );
-                          //           }
-                          //           return const Text(
-                          //             'Get',
-                          //             style: TextStyle(
-                          //               color: Colors.white,
-                          //               fontWeight: FontWeight.bold,
-                          //             ),
-                          //           );
-                          //         }),
-                          //       ),
-                          //     ),
-                          //   )
-                        ],
+                              )
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               );
             },
           ),

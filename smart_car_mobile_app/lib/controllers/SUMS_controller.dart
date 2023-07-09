@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,7 @@ class SUMSController extends GetxController {
   late RxList<dynamic> featuresInfo = <Feature>[].obs;
   var isLoading = false.obs;
   var isLoadingActivateFeature = false.obs;
+  RxBool hasAccess = false.obs;
   @override
   void onInit() {
     userWebServices = Get.find<UserWebServices>();
@@ -27,10 +30,13 @@ class SUMSController extends GetxController {
       var authToken = authenticationController.getToken();
       Response response =
           await userWebServices.getFeatureImage(authToken, featureId);
+
       if (response.statusCode == 200) {
+        debugPrint("feature status ${response.statusCode}");
         final featureImageBytes = response.data as List<int>;
-        return featureImageBytes;
+        return Uint8List.fromList(featureImageBytes);
       }
+      return null;
     } on DioException catch (e) {
       debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
     } finally {
@@ -44,14 +50,14 @@ class SUMSController extends GetxController {
       isLoading(true);
       var authToken = authenticationController.getToken();
       Response response = await userWebServices.fetchFeatures(authToken);
-      if (response != null && response.statusCode == 200) {
+      if (response.statusCode == 200) {
         final jsonResponse = response.data as List<dynamic>;
 
         final features = jsonResponse
             .map((data) => Feature.fromJson(data))
             .toList()
             .cast<Feature>();
-        debugPrint("state of feature ${features[0].state}");
+
         featuresInfo.addAll(features);
       }
     } on DioException catch (e) {
@@ -83,8 +89,9 @@ class SUMSController extends GetxController {
       var authToken = authenticationController.getToken();
       Response response =
           await userWebServices.deactivateFeature(authToken, feature.id);
-      if (response != null && response.statusCode == 200) {
+      if (response.statusCode == 200) {
         var code = response.data['code'];
+
         Get.showSnackbar(snackBar(code));
       }
     } on DioException catch (e) {

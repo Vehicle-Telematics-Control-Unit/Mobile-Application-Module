@@ -156,7 +156,7 @@ class NotificationController extends GetxController {
       isBatteryWarning.value = false;
     } else if (notification.message == "You need to check the Head lights") {
       isHeadlightWarning.value = true;
-    } else if (notification.message == "Tyre pressure in good condition") {
+    } else if (notification.message == "Head lights in good condition") {
       isHeadlightWarning.value = false;
     }
   }
