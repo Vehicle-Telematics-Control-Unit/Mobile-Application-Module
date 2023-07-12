@@ -5,9 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:smart_car_mobile_app/controllers/login_controller.dart';
 import 'package:smart_car_mobile_app/controllers/logout_controller.dart';
-import 'package:smart_car_mobile_app/presentation/screens/login_page.dart';
 
-import '../../../bindings/login_bindings/login_bindings.dart';
 import '../../../controllers/authentication_controller.dart';
 
 class SignOutOption extends StatefulWidget {

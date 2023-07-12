@@ -22,10 +22,7 @@ class NotificationController extends GetxController {
     super.onInit();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  
 
   void markAllAsRead() {
     for (var notification in _notifications) {

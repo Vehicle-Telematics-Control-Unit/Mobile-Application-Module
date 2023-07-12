@@ -31,7 +31,7 @@ class GpsController extends GetxController {
     intializeSignalR();
   }
 
-  Future<void> intializeSignalR() async {
+  Future<void> dfiedintializeSignalR() async {
     const serverUrl = 'https://vehicleplus.cloud/GPS';
     var authToken = authenticationController.getToken();
     const transport = HttpTransportType.webSockets;

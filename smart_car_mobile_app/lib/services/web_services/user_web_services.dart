@@ -6,15 +6,15 @@ import 'package:platform_device_id/platform_device_id.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response;
-import 'package:smart_car_mobile_app/controllers/logout_controller.dart';
+
 import 'package:smart_car_mobile_app/data/models/change-password-model.dart';
 import 'package:smart_car_mobile_app/data/models/get-feature-model.dart';
-import 'package:smart_car_mobile_app/data/models/send-code-model.dart';
+import 'package:smart_car_mobile_app/data/models/resend-code-model.dart';
+
 import 'package:smart_car_mobile_app/data/models/submit-access-model.dart';
 import 'package:smart_car_mobile_app/data/models/verify-user-command.dart';
 import '../../presentation/widgets/settings/access_denied.dart';
 import '../../utils/api_endpoints.dart';
-
 import '../../data/models/user.dart';
 
 class UserWebServices extends GetConnect {
@@ -282,6 +282,7 @@ class UserWebServices extends GetConnect {
       return response;
     } on DioException catch (e) {
       debugPrint("status code ${e.response?.statusCode}, ${e.toString()}");
+      Get.showSnackbar(snackBar("An error occured"));
     }
   }
 
@@ -336,9 +337,11 @@ class UserWebServices extends GetConnect {
   }
 
   Future<dynamic> resendCode(String deviceId, String username) async {
-     try {
-      SendCodeModel sendCodeModel = SendCodeModel(deviceId: deviceId,username: username); 
-      Response response = await dio.post(ApiEndPoints.resendCode,data: sendCodeModel.toJson());
+    try {
+      ResendCodeModel sendCodeModel =
+          ResendCodeModel(deviceId: deviceId, username: username);
+      Response response =
+          await dio.post(ApiEndPoints.resendCode, data: sendCodeModel.toJson());
       await Future.delayed(const Duration(seconds: 2));
       return response;
     } on DioException catch (e) {

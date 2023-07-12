@@ -1,18 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'send-code-model.dart';
+part of 'resend-code-model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-SendCodeModel _$SendCodeModelFromJson(Map<String, dynamic> json) =>
-    SendCodeModel(
+ResendCodeModel _$ResendCodeModelFromJson(Map<String, dynamic> json) =>
+    ResendCodeModel(
       username: json['username'] as String?,
       deviceId: json['deviceId'] as String?,
     );
 
-Map<String, dynamic> _$SendCodeModelToJson(SendCodeModel instance) =>
+Map<String, dynamic> _$ResendCodeModelToJson(ResendCodeModel instance) =>
     <String, dynamic>{
       'username': instance.username,
       'deviceId': instance.deviceId,

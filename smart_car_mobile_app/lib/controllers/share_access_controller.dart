@@ -102,7 +102,7 @@ class ShareAccessController extends GetxController {
           authenticationController.saveEmail(loginResponse.email);
           authenticationController.isLogged.value = true;
           debugPrint('saved token is ${authenticationController.getToken()}');
-          debugPrint('not token is ${notificationToken}');
+          debugPrint('not token is $notificationToken');
           Get.offAll(BottomNavBar()); // Nav Button
           return true;
         }

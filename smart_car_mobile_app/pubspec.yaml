@@ -47,6 +47,7 @@ dependencies:
   flutter_animation_progress_bar: ^2.3.1
   flutter_bloc: ^8.1.2
   flutter_image_compress: ^2.0.3
+  
   flutter_local_notifications: ^14.0.0+2
   flutter_localization: ^0.1.11
   flutter_offline: ^2.1.0
@@ -83,9 +84,15 @@ dependencies:
   web_socket_channel: ^2.4.0
 dev_dependencies:
   flutter_lints: ^2.0.0
+  flutter_launcher_icons  : ^0.13.1
   flutter_test:
     sdk: flutter
-
+    
+flutter_launcher_icons::
+  android: true
+  ios: true
+  image_path: "assets/images/Logo.png"
+  icon_size: 48
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter packages.
@@ -95,10 +102,12 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+ 
 
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/images/Logo.png
     - assets/images/tesla.png
     - assets/images/tesla2.png
     - assets/images/vehicle2_logo.png
@@ -110,12 +119,10 @@ flutter:
     - assets/images/101930-no-acces-denied.json
     - assets/13865-sign-for-error-flat-style.json
     - assets/92615-forgot-password-password-reset.json
-    - assets/map_styles.json
     - assets/images/icons8-tire-pressure-50.png
     - assets/images/icons8-car-battery-50.png
     - assets/images/icons8-headlight-50.png
-    - assets/images/51657.jpg
-    - assets/images/gps.png
+
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

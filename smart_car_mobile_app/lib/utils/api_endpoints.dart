@@ -1,5 +1,5 @@
 class ApiEndPoints {
-  static const String baseUrl = 'https://10.0.2.2:7111';
+  static const String baseUrl = 'https://vehicleplus.cloud';
   static const String loginUrl = '/authentication/mobile/login';
   static const String logout = '/authentication/mobile/logout';
   static const String resendCode = '/authentication/mobile/resendcode';
